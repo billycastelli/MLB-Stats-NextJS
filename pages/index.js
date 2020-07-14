@@ -4,7 +4,11 @@ import { useState } from "react";
 const SearchResult = (props) => {
     return (
         <React.Fragment>
-            <li className="card" key={props.player.playerid}>
+            <li
+                className="card"
+                key={props.player.playerid}
+                onClick={() => props.handlePlayerClick(props.player.playerid)}
+            >
                 <h3>{props.player.name}</h3>
                 <p>
                     avg {props.player.career_batting.avg} • hits{" "}
@@ -62,7 +66,10 @@ const SearchResults = (props) => {
         <React.Fragment>
             <ul>
                 {props.results.map((player) => (
-                    <SearchResult player={player} />
+                    <SearchResult
+                        player={player}
+                        handlePlayerClick={props.handlePlayerClick}
+                    />
                 ))}
             </ul>
             <style jsx>{`
@@ -77,6 +84,7 @@ const SearchResults = (props) => {
 export default function Home() {
     const [searchResponse, setSearchResponse] = useState([]);
     const [searchInputValue, setSearchInputValue] = useState("");
+    const [playerData, setPlayerData] = useState(null);
 
     const handleInput = (e) => {
         console.log(e.target.value);
@@ -96,8 +104,17 @@ export default function Home() {
         for (let i = 0; i < data.hits.length; i++) {
             results.push(data.hits[i]._source.player);
         }
-        console.log(results);
         setSearchResponse(results);
+    };
+
+    const handlePlayerClick = async (playerid) => {
+        const url =
+            "https://gzsj6zuxel.execute-api.us-west-2.amazonaws.com/dev/player?playerid=";
+        const completeUrl = url + playerid;
+        const response = await fetch(completeUrl);
+        const data = await response.json();
+        setPlayerData(data._source.player);
+        console.log(playerData);
     };
 
     return (
@@ -117,7 +134,10 @@ export default function Home() {
                 </div>
 
                 {searchResponse.length > 0 && (
-                    <SearchResults results={searchResponse} />
+                    <SearchResults
+                        results={searchResponse}
+                        handlePlayerClick={handlePlayerClick}
+                    />
                 )}
             </main>
             {}
