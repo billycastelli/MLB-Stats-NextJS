@@ -4,7 +4,7 @@ import Router, { useRouter } from "next/router";
 
 const SearchResult = (props) => {
     return (
-        <React.Fragment>
+        <React.Fragment key={props.player.playerid}>
             <li
                 className="card"
                 key={props.player.playerid}
@@ -87,11 +87,14 @@ const SearchInput = (props) => {
         <React.Fragment>
             <div className="search-div">
                 <form onSubmit={props.handleSearchSubmit}>
-                    <input type="search" onChange={props.handleSearchInput} />
+                    <input type="text" onChange={props.handleSearchInput} />
                     <button type="submit">Submit</button>
                 </form>
             </div>
-            <style jsx>{``}</style>
+            <style jsx>{`
+                .input {
+                }
+            `}</style>
         </React.Fragment>
     );
 };
@@ -135,11 +138,16 @@ export default function SearchHome() {
 
     return (
         <React.Fragment>
-            <SearchInput
-                handleSearchInput={handleSearchInput}
-                handleSearchSubmit={handleSearchSubmit}
-            />
-            {fetchResults !== [] && <SearchResults results={fetchResults} />}
+            <main>
+                <h1>MLB Player Search</h1>
+                <SearchInput
+                    handleSearchInput={handleSearchInput}
+                    handleSearchSubmit={handleSearchSubmit}
+                />
+                {fetchResults !== [] && (
+                    <SearchResults results={fetchResults} />
+                )}
+            </main>
             <style jsx>{`
                 .container {
                     min-height: 100vh;
