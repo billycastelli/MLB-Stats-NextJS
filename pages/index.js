@@ -1,5 +1,6 @@
 import Head from "next/head";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Router, { useRouter } from "next/router";
 
 const SearchResult = (props) => {
     return (
@@ -7,7 +8,7 @@ const SearchResult = (props) => {
             <li
                 className="card"
                 key={props.player.playerid}
-                onClick={() => props.handlePlayerClick(props.player.playerid)}
+                // onClick={() => props.handlePlayerClick(props.player.playerid)}
             >
                 <h3>{props.player.name}</h3>
                 <p>
@@ -81,78 +82,64 @@ const SearchResults = (props) => {
     );
 };
 
-export default function Home() {
-    const [searchResponse, setSearchResponse] = useState([]);
-    const [searchInputValue, setSearchInputValue] = useState("");
-    const [playerData, setPlayerData] = useState(null);
+const SearchInput = (props) => {
+    return (
+        <React.Fragment>
+            <div className="search-div">
+                <form onSubmit={props.handleSearchSubmit}>
+                    <input type="search" onChange={props.handleSearchInput} />
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+            <style jsx>{``}</style>
+        </React.Fragment>
+    );
+};
 
-    const handleInput = (e) => {
+export default function SearchHome() {
+    const [searchInput, setSearchInput] = useState("");
+    const [fetchResults, setFetchResults] = useState([]);
+    const router = useRouter();
+
+    useEffect(() => {
+        console.log(router.query.q);
+        const search = async () => {
+            const url =
+                "https://gzsj6zuxel.execute-api.us-west-2.amazonaws.com/dev/players?name_input=";
+            const completeUrl = url + router.query.q;
+            console.log(completeUrl);
+            const response = await fetch(completeUrl, {
+                mode: "cors",
+            });
+            const data = await response.json();
+            const results = [];
+            data.hits.map((item) => {
+                console.log(item._source.player);
+                results.push(item._source.player);
+            });
+            setFetchResults(results);
+        };
+        search();
+    }, [router.query.q]);
+
+    const handleSearchInput = (e) => {
         console.log(e.target.value);
-        setSearchInputValue(e.target.value);
+        setSearchInput(e.target.value);
     };
 
-    const handleSubmit = async (e) => {
+    const handleSearchSubmit = (e) => {
         e.preventDefault();
-        const url =
-            "https://gzsj6zuxel.execute-api.us-west-2.amazonaws.com/dev/players?name_input=";
-        const completeUrl = url + searchInputValue;
-        const response = await fetch(completeUrl, {
-            mode: "cors",
-        });
-        const data = await response.json();
-        let results = [];
-        for (let i = 0; i < data.hits.length; i++) {
-            results.push(data.hits[i]._source.player);
-        }
-        setSearchResponse(results);
-    };
-
-    const handlePlayerClick = async (playerid) => {
-        const url =
-            "https://gzsj6zuxel.execute-api.us-west-2.amazonaws.com/dev/player?playerid=";
-        const completeUrl = url + playerid;
-        const response = await fetch(completeUrl);
-        const data = await response.json();
-        setPlayerData(data._source.player);
-        console.log(playerData);
+        console.log(`Submitted: ${searchInput}`);
+        Router.push({ pathname: router.pathname, query: { q: searchInput } });
     };
 
     return (
-        <div className="container">
-            <Head>
-                <title>MLB Player Search</title>
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
-
-            <main>
-                <h1 className="title">Search for any baseball player</h1>
-                <div className="search-div">
-                    <form onSubmit={handleSubmit}>
-                        <input type="text" onChange={handleInput} />
-                        <button type="submit">Submit</button>
-                    </form>
-                </div>
-
-                {searchResponse.length > 0 && (
-                    <SearchResults
-                        results={searchResponse}
-                        handlePlayerClick={handlePlayerClick}
-                    />
-                )}
-            </main>
-            {}
-
-            <footer>
-                <a
-                    href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Powered by{" "}
-                    <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
-                </a>
-            </footer>
-
+        <React.Fragment>
+            <SearchInput
+                handleSearchInput={handleSearchInput}
+                handleSearchSubmit={handleSearchSubmit}
+            />
+            {fetchResults !== [] && <SearchResults results={fetchResults} />}
             <style jsx>{`
                 .container {
                     min-height: 100vh;
@@ -302,6 +289,6 @@ export default function Home() {
                     box-sizing: border-box;
                 }
             `}</style>
-        </div>
+        </React.Fragment>
     );
 }
