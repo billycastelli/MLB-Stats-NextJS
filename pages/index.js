@@ -102,7 +102,7 @@ const SearchInput = (props) => {
 export default function SearchHome() {
     const [searchInput, setSearchInput] = useState("");
     const [fetchResults, setFetchResults] = useState([]);
-    const [responseSize, setResponseSize] = useState(0);
+    const [responseSize, setResponseSize] = useState(undefined);
     const requestedResultSize = 5;
     const router = useRouter();
 
@@ -186,7 +186,7 @@ export default function SearchHome() {
                     handleSearchSubmit={handleSearchSubmit}
                 />
 
-                {fetchResults !== [] && fetchResults.length > 0 && (
+                {fetchResults !== [] && responseSize !== undefined && (
                     <React.Fragment>
                         {router.query.page > 1 && (
                             <button onClick={toPrevPage}>prev page</button>
@@ -203,7 +203,9 @@ export default function SearchHome() {
                             responseSize && (
                             <button onClick={toNextPage}>next page</button>
                         )}
-                        <p>Results found: {responseSize}</p>
+                        <p>
+                            Results found for '{router.query.q}': {responseSize}
+                        </p>
                     </React.Fragment>
                 )}
             </main>
