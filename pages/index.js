@@ -102,28 +102,42 @@ const SearchInput = (props) => {
 export default function SearchHome() {
     const [searchInput, setSearchInput] = useState("");
     const [fetchResults, setFetchResults] = useState([]);
+    const [responseSize, setResponseSize] = useState(0);
+    const requestedResultSize = 5;
     const router = useRouter();
 
     useEffect(() => {
         console.log(router.query.q);
+        // Add a check for pages below 1, pages above max
+        // if (router.query.page < 1) {
+        //     Router.push({
+        //         pathname: router.pathname,
+        //         query: { q: searchInput, page: 1 },
+        //     });
+        // }
         const search = async () => {
-            const url =
-                "https://gzsj6zuxel.execute-api.us-west-2.amazonaws.com/dev/players?name_input=";
-            const completeUrl = url + router.query.q;
-            console.log(completeUrl);
-            const response = await fetch(completeUrl, {
+            let result_size = requestedResultSize;
+            let starting_index =
+                (parseInt(router.query.page) - 1) * result_size;
+
+            const url = `https://gzsj6zuxel.execute-api.us-west-2.amazonaws.com/dev/players?name_input=${router.query.q}&result_size=${result_size}&starting_index=${starting_index}`;
+            console.log(url);
+            const response = await fetch(url, {
                 mode: "cors",
             });
             const data = await response.json();
+            setResponseSize(data.total.value);
             const results = [];
             data.hits.map((item) => {
-                console.log(item._source.player);
+                // console.log(item._source.player);
                 results.push(item._source.player);
             });
             setFetchResults(results);
         };
-        search();
-    }, [router.query.q]);
+        if (router.query.q) {
+            search();
+        }
+    }, [router.query]);
 
     const handleSearchInput = (e) => {
         console.log(e.target.value);
@@ -133,7 +147,34 @@ export default function SearchHome() {
     const handleSearchSubmit = (e) => {
         e.preventDefault();
         console.log(`Submitted: ${searchInput}`);
-        Router.push({ pathname: router.pathname, query: { q: searchInput } });
+        Router.push({
+            pathname: router.pathname,
+            query: { q: searchInput, page: 1 },
+        });
+    };
+
+    const toNextPage = () => {
+        let currentPage = parseInt(router.query.page);
+        console.log(currentPage);
+        let nextPage = ++currentPage;
+        console.log(nextPage);
+
+        Router.push({
+            pathname: router.pathname,
+            query: { q: router.query.q, page: nextPage },
+        });
+    };
+
+    const toPrevPage = () => {
+        let currentPage = parseInt(router.query.page);
+        console.log(currentPage);
+        let prevPage = --currentPage;
+        console.log(prevPage);
+
+        Router.push({
+            pathname: router.pathname,
+            query: { q: router.query.q, page: prevPage },
+        });
     };
 
     return (
@@ -144,8 +185,26 @@ export default function SearchHome() {
                     handleSearchInput={handleSearchInput}
                     handleSearchSubmit={handleSearchSubmit}
                 />
-                {fetchResults !== [] && (
-                    <SearchResults results={fetchResults} />
+
+                {fetchResults !== [] && fetchResults.length > 0 && (
+                    <React.Fragment>
+                        {router.query.page > 1 && (
+                            <button onClick={toPrevPage}>prev page</button>
+                        )}
+                        {router.query.page * requestedResultSize <
+                            responseSize && (
+                            <button onClick={toNextPage}>next page</button>
+                        )}
+                        <SearchResults results={fetchResults} />
+                        {router.query.page > 1 && (
+                            <button onClick={toPrevPage}>prev page</button>
+                        )}
+                        {router.query.page * requestedResultSize <
+                            responseSize && (
+                            <button onClick={toNextPage}>next page</button>
+                        )}
+                        <p>Results found: {responseSize}</p>
+                    </React.Fragment>
                 )}
             </main>
             <style jsx>{`
