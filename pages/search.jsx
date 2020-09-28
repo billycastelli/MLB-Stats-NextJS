@@ -73,6 +73,7 @@ const SearchInput = (props) => {
                     border-top-right-radius: 0;
                     border-bottom-right-radius: 0;
                     outline: none;
+                    -webkit-appearance: none;
                     box-shadow: 4px 4px 8px 2px rgba(2, 64, 6, 0.1);
                 }
                 .input-home::placeholder {
@@ -99,7 +100,6 @@ const SearchInput = (props) => {
                     font-size: 1rem;
                     font-family: Poppins, sans-serif;
                     outline: none;
-                    -webkit-appearance: none;
                     box-shadow: 4px 4px 8px 2px rgba(2, 64, 6, 0.1);
                 }
                 .search-button:hover {
