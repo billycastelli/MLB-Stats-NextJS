@@ -64,6 +64,7 @@ const SearchInput = (props) => {
             <style jsx>{`
                 .input-home {
                     max-height: 3rem;
+                    margin: 0;
                     padding: 12px;
                     line-height: 1.5rem;
                     font-size: 1.25rem;
@@ -72,8 +73,6 @@ const SearchInput = (props) => {
                     border-top-right-radius: 0;
                     border-bottom-right-radius: 0;
                     outline: none;
-                    -webkit-appearance: none;
-
                     box-shadow: 4px 4px 8px 2px rgba(2, 64, 6, 0.1);
                 }
                 .input-home::placeholder {
@@ -87,6 +86,7 @@ const SearchInput = (props) => {
 
                 .search-button {
                     max-height: 3rem;
+                    margin: 0;
                     cursor: pointer;
                     padding: 12px;
                     border: 1px solid #0fb377;
@@ -99,6 +99,7 @@ const SearchInput = (props) => {
                     font-size: 1rem;
                     font-family: Poppins, sans-serif;
                     outline: none;
+                    -webkit-appearance: none;
                     box-shadow: 4px 4px 8px 2px rgba(2, 64, 6, 0.1);
                 }
                 .search-button:hover {
@@ -197,6 +198,7 @@ export default function SearchHome() {
                     href="https://fonts.googleapis.com/css?family=Poppins"
                     rel="stylesheet"
                 />
+                <meta name="viewport" content="width=device-width" />
             </Head>
             <main>
                 <h1>Baseball Player Search</h1>
@@ -260,7 +262,6 @@ export default function SearchHome() {
                 html,
                 body {
                     padding: 0;
-                    margin: 0;
                     font-family: Poppins, sans-serif;
                 }
                 main {
