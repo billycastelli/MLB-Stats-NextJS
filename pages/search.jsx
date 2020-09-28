@@ -73,6 +73,7 @@ const SearchInput = (props) => {
                     border-bottom-right-radius: 0;
                     outline: none;
                     box-shadow: 4px 4px 8px 2px rgba(2, 64, 6, 0.1);
+                    -webkit-appearance: none;
                 }
                 .input-home::placeholder {
                     font-family: Poppins, sans-serif;
