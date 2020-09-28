@@ -16,14 +16,26 @@ const SearchResult = (props) => {
                 key={props.player.playerid}
                 onClick={() => handlePlayerClick(props.player.playerid)}
             >
+                {/* <a href={`/player?pid=${props.player.playerid}`}>tests</a> */}
                 <h3>{props.player.name}</h3>
-                {/* <p>
-                    avg {props.player.career_batting.avg} • hits{" "}
-                    {props.player.career_batting.hits} • hr{" "}
-                    {props.player.career_batting.homeruns}
-                </p> */}
+                <p>
+                    {props.player.career_batting.avg} AVG •{" "}
+                    {props.player.career_batting.hits} Hits •{" "}
+                    {props.player.career_batting.homeruns} HR{" "}
+                </p>
             </li>
-            <style jsx>{``}</style>
+            <style jsx>{`
+                .card {
+                    border: 1px solid #eee;
+                    border-radius: 5px;
+                    padding: 12px;
+                    margin: 12px;
+                }
+                .card:hover {
+                    background-color: #fafafa;
+                    cursor: pointer;
+                }
+            `}</style>
         </React.Fragment>
     );
 };
@@ -161,10 +173,12 @@ export default function SearchHome() {
     const handleSearchSubmit = (e) => {
         e.preventDefault();
         console.log(`Submitted: ${searchInput}`);
-        Router.push({
-            pathname: router.pathname,
-            query: { q: searchInput, page: 1 },
-        });
+        if (searchInput && searchInput.length > 0) {
+            Router.push({
+                pathname: router.pathname,
+                query: { q: searchInput, page: 1 },
+            });
+        }
     };
 
     const toNextPage = () => {
@@ -201,7 +215,7 @@ export default function SearchHome() {
                 <meta name="viewport" content="width=device-width" />
             </Head>
             <main>
-                <h1>Baseball Player Search</h1>
+                <h1 className="center-text">Baseball Player Search</h1>
                 <SearchInput
                     handleSearchInput={handleSearchInput}
                     handleSearchSubmit={handleSearchSubmit}
@@ -247,11 +261,14 @@ export default function SearchHome() {
                             )}
                         </div>
 
-                        <p>
+                        <p className="center-text">
                             Results found for '{router.query.q}': {responseSize}
                         </p>
                     </React.Fragment>
                 )}
+                {/* <div className="footer">
+                    <p>Footer</p>
+                </div> */}
             </main>
             <style jsx>{`
                 main {
@@ -271,7 +288,9 @@ export default function SearchHome() {
                     width: 100vw;
                     align-items: center;
                 }
-
+                .center-text {
+                    text-align: center;
+                }
                 .page-button-visible {
                     visibility: visible;
                     padding: 8px;
@@ -292,6 +311,12 @@ export default function SearchHome() {
                 }
                 .page-button-hidden {
                     visibility: hidden;
+                }
+                .footer {
+                    flex: 0;
+                    width: 100%;
+                    background-color: #eee;
+                    color: black;
                 }
             `}</style>
         </React.Fragment>
