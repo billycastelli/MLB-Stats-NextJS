@@ -17,53 +17,13 @@ const SearchResult = (props) => {
                 onClick={() => handlePlayerClick(props.player.playerid)}
             >
                 <h3>{props.player.name}</h3>
-                <p>
+                {/* <p>
                     avg {props.player.career_batting.avg} • hits{" "}
                     {props.player.career_batting.hits} • hr{" "}
                     {props.player.career_batting.homeruns}
-                </p>
+                </p> */}
             </li>
-            <style jsx>{`
-                .grid {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    flex-wrap: wrap;
-
-                    max-width: 800px;
-                    margin-top: 3rem;
-                }
-
-                .card {
-                    margin: 1rem;
-                    flex-basis: 45%;
-                    padding: 1.5rem;
-                    text-align: center;
-                    color: inherit;
-                    text-decoration: none;
-                    border: 1px solid #eaeaea;
-                    border-radius: 10px;
-                    transition: color 0.15s ease, border-color 0.15s ease;
-                }
-
-                .card:hover,
-                .card:focus,
-                .card:active {
-                    color: #0070f3;
-                    border-color: #0070f3;
-                }
-
-                .card h3 {
-                    margin: 0 0 1rem 0;
-                    font-size: 1.25rem;
-                }
-
-                .card p {
-                    margin: 0;
-                    font-size: 0.8rem;
-                    line-height: 1.5;
-                }
-            `}</style>
+            <style jsx>{``}</style>
         </React.Fragment>
     );
 };
@@ -90,12 +50,60 @@ const SearchInput = (props) => {
         <React.Fragment>
             <div className="search-div">
                 <form onSubmit={props.handleSearchSubmit}>
-                    <input type="text" onChange={props.handleSearchInput} />
-                    <button type="submit">Submit</button>
+                    <input
+                        type="text"
+                        className="input-home"
+                        placeholder="A player's name"
+                        onChange={props.handleSearchInput}
+                    />
+                    <button type="submit" className="search-button">
+                        Submit
+                    </button>
                 </form>
             </div>
             <style jsx>{`
-                .input {
+                .input-home {
+                    max-height: 3rem;
+                    padding: 12px;
+                    line-height: 1.5rem;
+                    font-size: 1.25rem;
+                    border: 0;
+                    border-radius: 12px;
+                    border-top-right-radius: 0;
+                    border-bottom-right-radius: 0;
+                    outline: none;
+                    box-shadow: 4px 4px 8px 2px rgba(2, 64, 6, 0.1);
+                }
+                .input-home::placeholder {
+                    font-family: Poppins, sans-serif;
+                    font-size: 1rem;
+                }
+                .input-home:focus {
+                    transition: linear 0.15s all;
+                    box-shadow: 4px 4px 16px 8px rgba(2, 64, 6, 0.1);
+                }
+
+                .search-button {
+                    max-height: 3rem;
+                    cursor: pointer;
+                    padding: 12px;
+                    border: 1px solid #0fb377;
+                    border-radius: 12px;
+                    border-top-left-radius: 0;
+                    border-bottom-left-radius: 0;
+                    background-color: #0fb377;
+                    color: #ffffff;
+                    line-height: 1.5rem;
+                    font-size: 1rem;
+                    font-family: Poppins, sans-serif;
+                    outline: none;
+                    box-shadow: 4px 4px 8px 2px rgba(2, 64, 6, 0.1);
+                }
+                .search-button:hover {
+                    transition: linear 0.2s all;
+                    border: 1px solid #0fb377;
+                    color: #0fb377;
+                    background-color: #ffffff;
                 }
             `}</style>
         </React.Fragment>
@@ -182,8 +190,14 @@ export default function SearchHome() {
 
     return (
         <React.Fragment>
+            <Head>
+                <link
+                    href="https://fonts.googleapis.com/css?family=Poppins"
+                    rel="stylesheet"
+                />
+            </Head>
             <main>
-                <h1>MLB Player Search</h1>
+                <h1>Baseball Player Search</h1>
                 <SearchInput
                     handleSearchInput={handleSearchInput}
                     handleSearchSubmit={handleSearchSubmit}
@@ -191,21 +205,44 @@ export default function SearchHome() {
 
                 {fetchResults !== [] && responseSize !== undefined && (
                     <React.Fragment>
-                        {router.query.page > 1 && (
-                            <button onClick={toPrevPage}>prev page</button>
-                        )}
-                        {router.query.page * requestedResultSize <
-                            responseSize && (
-                            <button onClick={toNextPage}>next page</button>
-                        )}
                         <SearchResults results={fetchResults} />
-                        {router.query.page > 1 && (
-                            <button onClick={toPrevPage}>prev page</button>
-                        )}
-                        {router.query.page * requestedResultSize <
-                            responseSize && (
-                            <button onClick={toNextPage}>next page</button>
-                        )}
+                        <div>
+                            {router.query.page <= 1 && (
+                                <button
+                                    onClick={toPrevPage}
+                                    className="page-button-hidden"
+                                >
+                                    Prev
+                                </button>
+                            )}
+                            {router.query.page > 1 && (
+                                <button
+                                    onClick={toPrevPage}
+                                    className="page-button-visible"
+                                >
+                                    Prev
+                                </button>
+                            )}
+                            {router.query.page * requestedResultSize >=
+                                responseSize && (
+                                <button
+                                    onClick={toNextPage}
+                                    className="page-button-hidden"
+                                >
+                                    Next
+                                </button>
+                            )}
+                            {router.query.page * requestedResultSize <
+                                responseSize && (
+                                <button
+                                    onClick={toNextPage}
+                                    className="page-button-visible"
+                                >
+                                    Next
+                                </button>
+                            )}
+                        </div>
+
                         <p>
                             Results found for '{router.query.q}': {responseSize}
                         </p>
@@ -213,137 +250,7 @@ export default function SearchHome() {
                 )}
             </main>
             <style jsx>{`
-                .container {
-                    min-height: 100vh;
-                    padding: 0 0.5rem;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    align-items: center;
-                }
-
                 main {
-                    padding: 5rem 0;
-                    flex: 1;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    align-items: center;
-                }
-
-                footer {
-                    width: 100%;
-                    height: 100px;
-                    border-top: 1px solid #eaeaea;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                }
-
-                footer img {
-                    margin-left: 0.5rem;
-                }
-
-                footer a {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                }
-
-                a {
-                    color: inherit;
-                    text-decoration: none;
-                }
-
-                .title a {
-                    color: #0070f3;
-                    text-decoration: none;
-                }
-
-                .title a:hover,
-                .title a:focus,
-                .title a:active {
-                    text-decoration: underline;
-                }
-
-                .title {
-                    margin: 0;
-                    line-height: 1.15;
-                    font-size: 4rem;
-                }
-
-                .title,
-                .description {
-                    text-align: center;
-                }
-
-                .description {
-                    line-height: 1.5;
-                    font-size: 1.5rem;
-                }
-
-                code {
-                    background: #fafafa;
-                    border-radius: 5px;
-                    padding: 0.75rem;
-                    font-size: 1.1rem;
-                    font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-                        DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New,
-                        monospace;
-                }
-
-                .grid {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    flex-wrap: wrap;
-
-                    max-width: 800px;
-                    margin-top: 3rem;
-                }
-
-                .card {
-                    margin: 1rem;
-                    flex-basis: 45%;
-                    padding: 1.5rem;
-                    text-align: left;
-                    color: inherit;
-                    text-decoration: none;
-                    border: 1px solid #eaeaea;
-                    border-radius: 10px;
-                    transition: color 0.15s ease, border-color 0.15s ease;
-                }
-
-                .card:hover,
-                .card:focus,
-                .card:active {
-                    color: #0070f3;
-                    border-color: #0070f3;
-                }
-
-                .card h3 {
-                    margin: 0 0 1rem 0;
-                    font-size: 1.5rem;
-                }
-
-                .card p {
-                    margin: 0;
-                    font-size: 1.25rem;
-                    line-height: 1.5;
-                }
-
-                .logo {
-                    height: 1em;
-                }
-
-                @media (max-width: 600px) {
-                    .grid {
-                        width: 100%;
-                        flex-direction: column;
-                    }
-                }
-                .search-div {
-                    padding-top: 3em;
                 }
             `}</style>
 
@@ -352,13 +259,36 @@ export default function SearchHome() {
                 body {
                     padding: 0;
                     margin: 0;
-                    font-family: -apple-system, BlinkMacSystemFont, Segoe UI,
-                        Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
-                        Helvetica Neue, sans-serif;
+                    font-family: Poppins, sans-serif;
+                }
+                main {
+                    display: flex;
+                    flex-direction: column;
+                    height: 100vh;
+                    width: 100vw;
+                    align-items: center;
                 }
 
-                * {
-                    box-sizing: border-box;
+                .page-button-visible {
+                    visibility: visible;
+                    padding: 8px;
+                    border: 1px solid #0fb377;
+                    border-radius: 12px;
+                    background-color: #ffffff;
+                    color: #0fb377;
+                    font-size: 1rem;
+                    font-family: Poppins, sans-serif;
+                    outline: none;
+                    cursor: pointer;
+                }
+                .page-button-visible:hover {
+                    transition: linear 0.2s all;
+                    border: 1px solid #0fb377;
+                    background-color: #0fb377;
+                    color: #ffffff;
+                }
+                .page-button-hidden {
+                    visibility: hidden;
                 }
             `}</style>
         </React.Fragment>
