@@ -45,10 +45,24 @@ const SearchBar = (props) => {
     );
 };
 
-const BattingStats = (props) => {
+const PlayerHero = (props) => {
     return (
         <>
-            <div class="scrollable">
+            <h1>{props.data.name}</h1>
+            <style jsx>{`
+                h1 {
+                    font-family: Poppins, sans-serif;
+                }
+            `}</style>
+        </>
+    );
+};
+
+const BattingStats = (props) => {
+    const years = props.batting.filter((line) => line.stint === 1).length;
+    return (
+        <>
+            <div className="scrollable">
                 <table>
                     <tr>
                         <th>Year</th>
@@ -84,23 +98,33 @@ const BattingStats = (props) => {
                         </tr>
                     ))}
                     <tr>
-                        {["", "", "", "", ...Object.values(props.career)].map(
-                            (stat, index) => (
-                                <td>{stat}</td>
-                            )
-                        )}
+                        {[
+                            `${years} years`,
+                            "",
+                            "",
+                            "",
+                            ...Object.values(props.career),
+                        ].map((stat, index) => (
+                            <td>{stat}</td>
+                        ))}
                     </tr>
                 </table>
             </div>
             <style jsx>{`
                 .scrollable {
                     overflow-x: auto;
+                    width: 100%;
                 }
                 table,
                 th,
                 td {
                     font-family: Poppins, sans-serif;
                     border: 1px solid black;
+                    position: sticky;
+                    top: 0;
+                    z-index: 999;
+                    border-collapse: collapse;
+                    padding: 6px;
                 }
             `}</style>
         </>
@@ -138,7 +162,7 @@ const PlayerPage = () => {
             {!playerData && <p>Loading...</p>}
             {playerData && (
                 <>
-                    <p>{playerData.name}</p>
+                    <PlayerHero data={playerData} />
                     <BattingStats
                         batting={playerData.batting}
                         career={playerData.career_batting}
@@ -148,7 +172,8 @@ const PlayerPage = () => {
             <style jsx>{`
                 html,
                 body,
-                p {
+                p,
+                h1 {
                     font-family: Poppins, sans-serif;
                 }
             `}</style>
