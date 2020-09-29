@@ -1,3 +1,5 @@
+import Head from "next/head";
+
 import { useState, useEffect } from "react";
 import Router, { useRouter } from "next/router";
 
@@ -20,12 +22,23 @@ const SearchBar = (props) => {
         <>
             <div className="search-div">
                 <form onSubmit={handleSearchSubmit}>
-                    <input type="text" onChange={handleSearchInput} />
+                    <input
+                        type="text"
+                        placeholder="Player"
+                        onChange={handleSearchInput}
+                    />
                     <button type="submit">Submit</button>
                 </form>
             </div>
             <style jsx>{`
-                .input {
+                input {
+                    margin: 0;
+                    padding: 12px;
+                    line-height: 1.5rem;
+                    font-size: 1.25rem;
+                    border: 3px solid #eee;
+                    border-radius: 12px;
+                    outline: none;
                 }
             `}</style>
         </>
@@ -33,14 +46,64 @@ const SearchBar = (props) => {
 };
 
 const BattingStats = (props) => {
-    console.log(props.career);
     return (
-        <div>
-            {props.batting.map((line, index) => (
-                <p id={index}>{JSON.stringify(line)}</p>
-            ))}
-            <p>{JSON.stringify(props.career)}</p>
-        </div>
+        <>
+            <div class="scrollable">
+                <table>
+                    <tr>
+                        <th>Year</th>
+                        <th>Stint</th>
+                        <th>Team</th>
+                        <th>League</th>
+                        <th>G</th>
+                        <th>AB</th>
+                        <th>Runs</th>
+                        <th>Hits</th>
+                        <th>2B</th>
+                        <th>3B</th>
+                        <th>HR</th>
+                        <th>RBI</th>
+                        <th>SB</th>
+                        <th>CS</th>
+                        <th>BB</th>
+                        <th>SO</th>
+                        <th>IBB</th>
+                        <th>HBP</th>
+                        <th>SH</th>
+                        <th>SF</th>
+                        <th>GIDP</th>
+                        <th>AVG</th>
+                    </tr>
+                    {props.batting.map((line, index) => (
+                        <tr>
+                            {Object.values(line)
+                                .slice(1)
+                                .map((stat) => (
+                                    <td>{stat}</td>
+                                ))}
+                        </tr>
+                    ))}
+                    <tr>
+                        {["", "", "", "", ...Object.values(props.career)].map(
+                            (stat, index) => (
+                                <td>{stat}</td>
+                            )
+                        )}
+                    </tr>
+                </table>
+            </div>
+            <style jsx>{`
+                .scrollable {
+                    overflow-x: auto;
+                }
+                table,
+                th,
+                td {
+                    font-family: Poppins, sans-serif;
+                    border: 1px solid black;
+                }
+            `}</style>
+        </>
     );
 };
 
@@ -65,6 +128,12 @@ const PlayerPage = () => {
     }, [router.query]);
     return (
         <>
+            <Head>
+                <link
+                    href="https://fonts.googleapis.com/css?family=Poppins"
+                    rel="stylesheet"
+                />
+            </Head>
             <SearchBar />
             {!playerData && <p>Loading...</p>}
             {playerData && (
@@ -76,6 +145,13 @@ const PlayerPage = () => {
                     />
                 </>
             )}
+            <style jsx>{`
+                html,
+                body,
+                p {
+                    font-family: Poppins, sans-serif;
+                }
+            `}</style>
         </>
     );
 };
