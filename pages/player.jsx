@@ -159,7 +159,6 @@ const PlayerPage = () => {
                 />
             </Head>
             <SearchBar />
-            {!playerData && <p>Loading...</p>}
             {playerData && (
                 <>
                     <PlayerHero data={playerData} />
