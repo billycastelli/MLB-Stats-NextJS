@@ -1,0 +1,21 @@
+.input-div {
+  border: 1px solid red;
+}
+
+.search-input {
+  outline: none !important;
+  -webkit-appearance: none !important;
+  // box-shadow: 4px 4px 8px 2px rgba(2, 64, 6, 0.1);
+}
+
+.search-input:focus {
+  outline: none !important;
+}
+
+.search-button {
+  background-color: #0fb377 !important;
+}
+
+.search-button:hover {
+  background-color: #0d9966 !important;
+}

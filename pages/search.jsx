@@ -1,53 +1,17 @@
 import Head from "next/head";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import Header from "../components/Header/Header";
+import Footer from "../components/Footer/Footer";
 import { useState, useEffect } from "react";
 import Router, { useRouter } from "next/router";
-
-const SearchResult = (props) => {
-  const router = useRouter();
-
-  const handlePlayerClick = (playerid) => {
-    router.push({ pathname: "/player", query: { pid: playerid } });
-  };
-
-  return (
-    <React.Fragment key={props.player.playerid}>
-      <li
-        className="card"
-        key={props.player.playerid}
-        onClick={() => handlePlayerClick(props.player.playerid)}
-      >
-        {/* <a href={`/player?pid=${props.player.playerid}`}>tests</a> */}
-        <h3>{props.player.name}</h3>
-        <p>
-          {props.player.career_batting.avg} AVG •{" "}
-          {props.player.career_batting.hits} Hits •{" "}
-          {props.player.career_batting.homeruns} HR{" "}
-        </p>
-      </li>
-      <style jsx>{`
-        .card {
-          border: 1px solid #eee;
-          border-radius: 5px;
-          padding: 12px;
-          margin: 12px;
-        }
-        .card:hover {
-          background-color: #fafafa;
-          cursor: pointer;
-        }
-      `}</style>
-    </React.Fragment>
-  );
-};
+import SearchInput from "../components/SearchInput/SearchInput";
+import SearchResultCard from "../components/SearchResultCard/SearchResultCard";
 
 const SearchResults = (props) => {
   return (
     <React.Fragment>
       <ul>
         {props.results.map((player, index) => (
-          <SearchResult player={player} key={index} />
+          <SearchResultCard player={player} key={index} />
         ))}
       </ul>
       <style jsx>{`
@@ -59,76 +23,7 @@ const SearchResults = (props) => {
   );
 };
 
-const SearchInput = (props) => {
-  return (
-    <React.Fragment>
-      <div className="search-div">
-        <form onSubmit={props.handleSearchSubmit}>
-          <input
-            type="text"
-            className="input-home"
-            placeholder="A player's name"
-            onChange={props.handleSearchInput}
-          />
-          <button type="submit" className="search-button">
-            Submit
-          </button>
-        </form>
-      </div>
-      <style jsx>{`
-        .input-home {
-          max-height: 3rem;
-          margin: 0;
-          padding: 12px;
-          line-height: 1.5rem;
-          font-size: 1.25rem;
-          border: 0;
-          border-radius: 12px;
-          border-top-right-radius: 0;
-          border-bottom-right-radius: 0;
-          outline: none;
-          -webkit-appearance: none;
-          box-shadow: 4px 4px 8px 2px rgba(2, 64, 6, 0.1);
-        }
-        .input-home::placeholder {
-          font-family: Poppins, sans-serif;
-          font-size: 1rem;
-        }
-        .input-home:focus {
-          transition: linear 0.15s all;
-          box-shadow: 4px 4px 16px 8px rgba(2, 64, 6, 0.1);
-        }
-
-        .search-button {
-          max-height: 3rem;
-          margin: 0;
-          cursor: pointer;
-          padding: 12px;
-          border: 1px solid #0fb377;
-          border-radius: 12px;
-          border-top-left-radius: 0;
-          border-bottom-left-radius: 0;
-          background-color: #0fb377;
-          color: #ffffff;
-          line-height: 1.5rem;
-          font-size: 1rem;
-          font-family: Poppins, sans-serif;
-          outline: none;
-          box-shadow: 4px 4px 8px 2px rgba(2, 64, 6, 0.1);
-        }
-        .search-button:hover {
-          transition: linear 0.2s all;
-          border: 1px solid #0fb377;
-          color: #0fb377;
-          background-color: #ffffff;
-        }
-      `}</style>
-    </React.Fragment>
-  );
-};
-
 export default function SearchHome() {
-  const [searchInput, setSearchInput] = useState("");
   const [fetchResults, setFetchResults] = useState([]);
   const [responseSize, setResponseSize] = useState(undefined);
   const requestedResultSize = 5;
@@ -165,22 +60,6 @@ export default function SearchHome() {
       search();
     }
   }, [router.query]);
-
-  const handleSearchInput = (e) => {
-    console.log(e.target.value);
-    setSearchInput(e.target.value);
-  };
-
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    console.log(`Submitted: ${searchInput}`);
-    if (searchInput && searchInput.length > 0) {
-      Router.push({
-        pathname: router.pathname,
-        query: { q: searchInput, page: 1 },
-      });
-    }
-  };
 
   const toNextPage = () => {
     let currentPage = parseInt(router.query.page);
@@ -219,57 +98,45 @@ export default function SearchHome() {
         <Header />
 
         <h1 className="center-text">Baseball Player Search</h1>
-        <SearchInput
-          handleSearchInput={handleSearchInput}
-          handleSearchSubmit={handleSearchSubmit}
-        />
+        <div className="container">
+          <SearchInput />
 
-        {fetchResults !== [] && responseSize !== undefined && (
-          <React.Fragment>
-            <SearchResults results={fetchResults} />
-            <div>
-              {router.query.page <= 1 && (
-                <button onClick={toPrevPage} className="page-button-hidden">
-                  Prev
-                </button>
-              )}
-              {router.query.page > 1 && (
-                <button onClick={toPrevPage} className="page-button-visible">
-                  Prev
-                </button>
-              )}
-              {router.query.page * requestedResultSize >= responseSize && (
-                <button onClick={toNextPage} className="page-button-hidden">
-                  Next
-                </button>
-              )}
-              {router.query.page * requestedResultSize < responseSize && (
-                <button onClick={toNextPage} className="page-button-visible">
-                  Next
-                </button>
-              )}
-            </div>
+          {fetchResults !== [] && responseSize !== undefined && (
+            <React.Fragment>
+              <SearchResults results={fetchResults} />
+              <div>
+                {router.query.page <= 1 && (
+                  <button onClick={toPrevPage} className="page-button-hidden">
+                    Prev
+                  </button>
+                )}
+                {router.query.page > 1 && (
+                  <button onClick={toPrevPage} className="page-button-visible">
+                    Prev
+                  </button>
+                )}
+                {router.query.page * requestedResultSize >= responseSize && (
+                  <button onClick={toNextPage} className="page-button-hidden">
+                    Next
+                  </button>
+                )}
+                {router.query.page * requestedResultSize < responseSize && (
+                  <button onClick={toNextPage} className="page-button-visible">
+                    Next
+                  </button>
+                )}
+              </div>
 
-            <p className="center-text">
-              Results found for '{router.query.q}': {responseSize}
-            </p>
-          </React.Fragment>
-        )}
-        {/* <div className="footer">
-                    <p>Footer</p>
-                </div> */}
+              <p className="center-text">
+                Results found for '{router.query.q}': {responseSize}
+              </p>
+            </React.Fragment>
+          )}
+        </div>
         <Footer />
       </main>
 
       <style jsx global>{`
-        html {
-          margin: 0;
-        }
-        body {
-          margin: 0;
-          padding: 0;
-          font-family: Poppins, sans-serif;
-        }
         .center-text {
           text-align: center;
         }
@@ -281,7 +148,6 @@ export default function SearchHome() {
           background-color: #ffffff;
           color: #0fb377;
           font-size: 1rem;
-          font-family: Poppins, sans-serif;
           outline: none;
           cursor: pointer;
         }
@@ -293,12 +159,6 @@ export default function SearchHome() {
         }
         .page-button-hidden {
           visibility: hidden;
-        }
-        .footer {
-          flex: 0;
-          width: 100%;
-          background-color: #eee;
-          color: black;
         }
       `}</style>
     </React.Fragment>
