@@ -19,7 +19,11 @@ const PlayerHero = (props) => {
           </div>
           <div className="column is-one-third">
             <div className={styles.quickStats}>
-              <h1 className={styles.quickStatsTitle}>Highlights</h1>
+              <div className={styles.quickStatsTitle}>
+                <span>
+                  Highlights <img src="/images/emoji_events-24px.svg" />
+                </span>
+              </div>
               <div className="columns">
                 <div className="column ">
                   <p>HITS</p>
