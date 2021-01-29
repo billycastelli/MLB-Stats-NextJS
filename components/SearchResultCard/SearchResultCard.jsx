@@ -5,7 +5,7 @@ const SearchResultCard = (props) => {
   const router = useRouter();
 
   const handlePlayerClick = (playerid) => {
-    router.push({ pathname: "/player", query: { pid: playerid } });
+    router.push({ pathname: `/player/${playerid}` });
   };
 
   return (
@@ -14,7 +14,6 @@ const SearchResultCard = (props) => {
       key={props.player.playerid}
       onClick={() => handlePlayerClick(props.player.playerid)}
     >
-      {/* <a href={`/player?pid=${props.player.playerid}`}>tests</a> */}
       <h3>{props.player.name}</h3>
       <p>
         {props.player.career_batting.avg} AVG •{" "}

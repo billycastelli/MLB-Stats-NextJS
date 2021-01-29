@@ -2,9 +2,9 @@ import Head from "next/head";
 
 import { useState, useEffect } from "react";
 import Router, { useRouter } from "next/router";
-import Header from "../components/Header/Header";
-import SearchInput from "../components/SearchInput/SearchInput";
-import PlayerHero from "../components/PlayerHero/PlayerHero";
+import Header from "../../components/Header/Header";
+import SearchInput from "../../components/SearchInput/SearchInput";
+import PlayerHero from "../../components/PlayerHero/PlayerHero";
 import useSWR from "swr";
 
 const BattingStats = (props) => {
@@ -112,13 +112,8 @@ const PlayerPage = () => {
   }, [router.query]);
   return (
     <>
-      <Head>
-        <link
-          href="https://fonts.googleapis.com/css?family=Poppins"
-          rel="stylesheet"
-        />
-      </Head>
       <Header />
+
       <div className="container">
         <div className="columns">
           <div className="column is-three-quarters"></div>
