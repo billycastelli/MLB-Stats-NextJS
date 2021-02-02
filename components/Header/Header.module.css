@@ -11,7 +11,16 @@
 }
 
 .header_image:hover {
-  cursor: default;
+  cursor: pointer;
   transform: rotate(180deg);
   transition: all 0.3s ease-in-out 0s;
+}
+
+.brand {
+  padding: 4px;
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 500;
 }

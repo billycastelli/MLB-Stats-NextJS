@@ -115,11 +115,8 @@ const PlayerPage = () => {
       <Header />
 
       <div className="container">
-        <div className="columns">
-          <div className="column is-three-quarters"></div>
-          <div className="column" style={{ marginTop: "8px" }}>
-            <SearchInput />
-          </div>
+        <div style={{ marginTop: "18px" }}>
+          <SearchInput center={true} />
         </div>
       </div>
       {playerData && (

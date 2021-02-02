@@ -1,89 +1,37 @@
 import Head from "next/head";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
-import { useState, useEffect } from "react";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import SearchInput from "../components/SearchInput/SearchInput";
-import SearchResultCard from "../components/SearchResultCard/SearchResultCard";
+import SearchResults from "../components/SearchResults/SearchResults";
+import SearchPagination from "../components/SearchPagination/SearchPagination";
+import useSWR from "swr";
 
-const SearchResults = (props) => {
-  return (
-    <React.Fragment>
-      <ul>
-        {props.results.map((player, index) => (
-          <SearchResultCard player={player} key={index} />
-        ))}
-      </ul>
-      <style jsx>{`
-        * {
-          list-style-type: none;
-        }
-      `}</style>
-    </React.Fragment>
-  );
+const fetcher = async (route, query_string, result_size, starting_index) => {
+  try {
+    const url = `https://gzsj6zuxel.execute-api.us-west-2.amazonaws.com/dev/${route}?name_input=${query_string}&result_size=${result_size}&starting_index=${starting_index}`;
+    const response = await fetch(url, {
+      mode: "cors",
+    });
+    const data = await response.json();
+    return data;
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 export default function SearchHome() {
-  const [fetchResults, setFetchResults] = useState([]);
-  const [responseSize, setResponseSize] = useState(undefined);
-  const requestedResultSize = 5;
   const router = useRouter();
+  const requestedResultSize = 10;
 
-  useEffect(() => {
-    // Add a check for pages below 1, pages above max
-    if (router.query.page < 1) {
-      Router.push({
-        pathname: router.pathname,
-        query: { q: router.query.q, page: 1 },
-      });
-    }
-    const search = async () => {
-      let result_size = requestedResultSize;
-      let starting_index = (parseInt(router.query.page) - 1) * result_size;
-
-      const url = `https://gzsj6zuxel.execute-api.us-west-2.amazonaws.com/dev/players?name_input=${router.query.q}&result_size=${result_size}&starting_index=${starting_index}`;
-      console.log(url);
-      const response = await fetch(url, {
-        mode: "cors",
-      });
-      const data = await response.json();
-      setResponseSize(data.total.value);
-      const results = [];
-      data.hits.map((item) => {
-        // console.log(item._source.player);
-        results.push(item._source.player);
-      });
-      console.log(results);
-      setFetchResults(results);
-    };
-    if (router.query.q) {
-      search();
-    }
-  }, [router.query]);
-
-  const toNextPage = () => {
-    let currentPage = parseInt(router.query.page);
-    console.log(currentPage);
-    let nextPage = ++currentPage;
-    console.log(nextPage);
-
-    Router.push({
-      pathname: router.pathname,
-      query: { q: router.query.q, page: nextPage },
-    });
-  };
-
-  const toPrevPage = () => {
-    let currentPage = parseInt(router.query.page);
-    console.log(currentPage);
-    let prevPage = --currentPage;
-    console.log(prevPage);
-
-    Router.push({
-      pathname: router.pathname,
-      query: { q: router.query.q, page: prevPage },
-    });
-  };
+  let result_size = requestedResultSize;
+  let starting_index = (parseInt(router.query.page) - 1) * result_size;
+  const { data, error } = useSWR(
+    router.query.q && result_size && starting_index >= 0
+      ? ["/players", router.query.q, result_size, starting_index]
+      : null,
+    fetcher
+  );
 
   return (
     <React.Fragment>
@@ -97,40 +45,38 @@ export default function SearchHome() {
       <main>
         <Header />
 
-        <h1 className="center-text">Baseball Player Search</h1>
         <div className="container">
-          <SearchInput />
+          <div style={{ marginTop: "18px" }}>
+            <SearchInput center={true} />
+          </div>
+          {/* Idle state */}
+          {!data && !router.query.q && (
+            <div style={{ marginBottom: "600px" }}></div>
+          )}
 
-          {fetchResults !== [] && responseSize !== undefined && (
-            <React.Fragment>
-              <SearchResults results={fetchResults} />
-              <div>
-                {router.query.page <= 1 && (
-                  <button onClick={toPrevPage} className="page-button-hidden">
-                    Prev
-                  </button>
-                )}
-                {router.query.page > 1 && (
-                  <button onClick={toPrevPage} className="page-button-visible">
-                    Prev
-                  </button>
-                )}
-                {router.query.page * requestedResultSize >= responseSize && (
-                  <button onClick={toNextPage} className="page-button-hidden">
-                    Next
-                  </button>
-                )}
-                {router.query.page * requestedResultSize < responseSize && (
-                  <button onClick={toNextPage} className="page-button-visible">
-                    Next
-                  </button>
-                )}
+          {/* Loading state */}
+          {!data && router.query.q && (
+            <div style={{ marginBottom: "600px" }}>
+              <div className="section">
+                <div className="columns is-centered">Searching...</div>
               </div>
+            </div>
+          )}
+
+          {/* Data found */}
+          {data && data.total.value && data.hits && data.hits !== [] && (
+            <>
+              <SearchResults results={data.hits} />
+              <SearchPagination
+                router={router}
+                data={data}
+                requestedResultSize={requestedResultSize}
+              />
 
               <p className="center-text">
-                Results found for '{router.query.q}': {responseSize}
+                Results found for '{router.query.q}': {data.total.value}
               </p>
-            </React.Fragment>
+            </>
           )}
         </div>
         <Footer />
@@ -139,26 +85,6 @@ export default function SearchHome() {
       <style jsx global>{`
         .center-text {
           text-align: center;
-        }
-        .page-button-visible {
-          visibility: visible;
-          padding: 8px;
-          border: 1px solid #0fb377;
-          border-radius: 12px;
-          background-color: #ffffff;
-          color: #0fb377;
-          font-size: 1rem;
-          outline: none;
-          cursor: pointer;
-        }
-        .page-button-visible:hover {
-          transition: linear 0.2s all;
-          border: 1px solid #0fb377;
-          background-color: #0fb377;
-          color: #ffffff;
-        }
-        .page-button-hidden {
-          visibility: hidden;
         }
       `}</style>
     </React.Fragment>

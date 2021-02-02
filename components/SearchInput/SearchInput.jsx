@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./SearchInput.module.scss";
 import Router, { useRouter } from "next/router";
 
-const SearchInput = () => {
+const SearchInput = (props) => {
   const [searchInput, setSearchInput] = useState("");
 
   const handleSearchInput = (e) => {
@@ -19,7 +19,11 @@ const SearchInput = () => {
     }
   };
   return (
-    <div className="field has-addons">
+    <div
+      className={`field has-addons ${
+        props.center === true && "has-addons-centered"
+      }`}
+    >
       <div className="control">
         <form onSubmit={handleSearchSubmit}>
           <input
