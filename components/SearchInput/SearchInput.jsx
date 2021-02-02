@@ -6,13 +6,11 @@ const SearchInput = () => {
   const [searchInput, setSearchInput] = useState("");
 
   const handleSearchInput = (e) => {
-    console.log(e.target.value);
     setSearchInput(e.target.value);
   };
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    console.log(`Submitted: ${searchInput}`);
     if (searchInput && searchInput.length > 0) {
       Router.push({
         pathname: "/search",
@@ -32,8 +30,14 @@ const SearchInput = () => {
           />
         </form>
       </div>
+
       <div className="control">
-        <a className={`${styles["search-button"]} button is-info`}>Submit</a>
+        <a
+          className={`${styles["search-button"]} button is-info`}
+          onClick={handleSearchSubmit}
+        >
+          Submit
+        </a>
       </div>
     </div>
   );
