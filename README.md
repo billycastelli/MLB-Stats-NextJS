@@ -1,1 +1,2 @@
-This is a starter template for [Learn Next.js](https://nextjs.org/learn).
+# QuickStats
+Quickly search through decades of Major League Baseball statistics using Elasticsearch
