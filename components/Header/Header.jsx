@@ -10,7 +10,7 @@ const Header = () => {
             <img className={styles.header_image} src="/baseball-16.svg" />{" "}
           </a>
         </Link>
-        QuickStats
+        {/* QuickStats */}
       </span>
     </div>
   );

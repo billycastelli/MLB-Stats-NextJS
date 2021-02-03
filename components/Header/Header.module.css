@@ -1,11 +1,12 @@
 .header {
   background-color: rgb(255, 255, 255);
   border-bottom: 4px solid #32be20;
+  height: 48px;
 }
 
 .header_image {
-  height: 4em;
-  width: 4em;
+  height: 36px;
+  width: 36px;
   margin-left: 12px;
   transition: all 0.3s ease-in-out 0s;
 }

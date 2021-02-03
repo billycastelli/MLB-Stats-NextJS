@@ -31,7 +31,7 @@ const PlayerHero = (props) => {
                 </div>
                 <div className="column">
                   <p className={styles.highlightLabel} H>
-                    R
+                    HR
                   </p>
                   <p>{props.data.career_batting.homeruns}</p>
                 </div>

@@ -1,5 +1,6 @@
 import styles from "./WelcomeSegment.module.scss";
 import SearchInput from "../SearchInput/SearchInput";
+import HomeCard from "./HomeCard";
 
 const WelcomeSegment = () => {
   return (
@@ -16,6 +17,11 @@ const WelcomeSegment = () => {
           <div className={styles["search-holder"]}>
             <SearchInput />
           </div>
+        </div>
+      </div>
+      <div className="container">
+        <div className="section">
+          <HomeCard />
         </div>
       </div>
     </div>
