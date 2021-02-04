@@ -6,44 +6,47 @@ import Header from "../../components/Header/Header";
 import SearchInput from "../../components/SearchInput/SearchInput";
 import PlayerHero from "../../components/PlayerHero/PlayerHero";
 import BattingStats from "../../components/BattingStats/BattingStats";
+import BattingChart from "../../components/BattingChart/BattingChart";
 import useSWR from "swr";
+
+const fetcher = async (route, pid) => {
+  try {
+    const url = `https://gzsj6zuxel.execute-api.us-west-2.amazonaws.com/dev/${route}?playerid=${pid}`;
+    const response = await fetch(url, {
+      mode: "cors",
+    });
+    const data = await response.json();
+    return data;
+  } catch (e) {
+    console.log(e);
+  }
+};
 
 const PlayerPage = () => {
   const router = useRouter();
-  const [playerData, setPlayerData] = useState(null);
 
-  useEffect(() => {
-    const fetchPlayerInfo = async (pid) => {
-      const response = await fetch(
-        `https://gzsj6zuxel.execute-api.us-west-2.amazonaws.com/dev/player?playerid=${pid}`,
-        { mode: "cors" }
-      );
-      const data = await response.json();
-      console.log(data._source.player);
-      setPlayerData(data._source.player);
-    };
-    if (router.query.pid) {
-      fetchPlayerInfo(router.query.pid);
-      console.log(playerData);
-    }
-  }, [router.query]);
+  const { data, error } = useSWR(
+    router.query.pid ? ["/player", router.query.pid] : null,
+    fetcher
+  );
+
   return (
     <>
       <Header />
-
       <div className="container">
         <div style={{ marginTop: "18px" }}>
           <SearchInput center={true} />
         </div>
       </div>
-      {playerData && (
+      {data && data._source.player && data._source.player.batting && (
         <>
-          <PlayerHero data={playerData} />
+          <PlayerHero data={data._source.player} />
           <BattingStats
-            batting={playerData.batting}
-            career={playerData.career_batting}
-            playerid={playerData.playerid}
+            batting={data._source.player.batting}
+            career={data._source.player.career_batting}
+            playerid={data._source.player.playerid}
           />
+          <BattingChart batting={data._source.player.batting} stat="homeruns" />
         </>
       )}
     </>

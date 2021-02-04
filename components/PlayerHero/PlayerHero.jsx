@@ -31,9 +31,7 @@ const PlayerHero = (props) => {
                     <p>{props.data.career_batting.hits}</p>
                   </div>
                   <div className="column">
-                    <p className={styles.highlightLabel} H>
-                      HR
-                    </p>
+                    <p className={styles.highlightLabel}>HR</p>
                     <p>{props.data.career_batting.homeruns}</p>
                   </div>
                   <div className="column">

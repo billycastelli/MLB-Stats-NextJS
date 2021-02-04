@@ -17,50 +17,54 @@ const BattingStats = (props) => {
                 style={{ borderRadius: "12px" }}
               >
                 <thead>
-                  <th>Year</th>
-                  <th>Stint</th>
-                  <th>Team</th>
-                  <th>League</th>
-                  <th>G</th>
-                  <th>AB</th>
-                  <th>Runs</th>
-                  <th>Hits</th>
-                  <th>2B</th>
-                  <th>3B</th>
-                  <th>HR</th>
-                  <th>RBI</th>
-                  <th>SB</th>
-                  <th>CS</th>
-                  <th>BB</th>
-                  <th>SO</th>
-                  <th>IBB</th>
-                  <th>HBP</th>
-                  <th>SH</th>
-                  <th>SF</th>
-                  <th>GIDP</th>
-                  <th>AVG</th>
+                  <tr>
+                    <th>Year</th>
+                    <th>Stint</th>
+                    <th>Team</th>
+                    <th>League</th>
+                    <th>G</th>
+                    <th>AB</th>
+                    <th>Runs</th>
+                    <th>Hits</th>
+                    <th>2B</th>
+                    <th>3B</th>
+                    <th>HR</th>
+                    <th>RBI</th>
+                    <th>SB</th>
+                    <th>CS</th>
+                    <th>BB</th>
+                    <th>SO</th>
+                    <th>IBB</th>
+                    <th>HBP</th>
+                    <th>SH</th>
+                    <th>SF</th>
+                    <th>GIDP</th>
+                    <th>AVG</th>
+                  </tr>
                 </thead>
                 <tbody>
                   {props.batting.map((line, index) => (
                     <tr>
                       {Object.values(line)
                         .slice(1)
-                        .map((stat) => (
+                        .map((index, stat) => (
                           <td>{stat}</td>
                         ))}
                     </tr>
                   ))}
                 </tbody>
                 <tfoot>
-                  {[
-                    `${years} years`,
-                    "",
-                    "",
-                    "",
-                    ...Object.values(props.career),
-                  ].map((stat, index) => (
-                    <td>{stat}</td>
-                  ))}
+                  <tr>
+                    {[
+                      `${years} years`,
+                      "",
+                      "",
+                      "",
+                      ...Object.values(props.career),
+                    ].map((stat, index) => (
+                      <td>{stat}</td>
+                    ))}
+                  </tr>
                 </tfoot>
               </table>
             </div>
