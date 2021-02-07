@@ -46,7 +46,10 @@ const PlayerPage = () => {
             career={data._source.player.career_batting}
             playerid={data._source.player.playerid}
           />
-          <BattingChart batting={data._source.player.batting} stat="homeruns" />
+          <BattingChart
+            batting={data._source.player.batting}
+            playerName={data._source.player.name}
+          />
         </>
       )}
     </>

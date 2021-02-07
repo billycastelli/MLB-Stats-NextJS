@@ -43,12 +43,12 @@ const BattingStats = (props) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {props.batting.map((line, index) => (
-                    <tr>
+                  {props.batting.map((line, yearIndex) => (
+                    <tr key={yearIndex}>
                       {Object.values(line)
                         .slice(1)
-                        .map((index, stat) => (
-                          <td>{stat}</td>
+                        .map((stat, statIndex) => (
+                          <td key={statIndex}>{stat}</td>
                         ))}
                     </tr>
                   ))}
@@ -62,7 +62,7 @@ const BattingStats = (props) => {
                       "",
                       ...Object.values(props.career),
                     ].map((stat, index) => (
-                      <td>{stat}</td>
+                      <td key={index}>{stat}</td>
                     ))}
                   </tr>
                 </tfoot>
