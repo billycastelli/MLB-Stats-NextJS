@@ -5,3 +5,9 @@
   width: 66px;
   margin-left: 0px;
 }
+
+@media (max-width: 600px) {
+  .customMobile {
+    margin-left: 12px;
+  }
+}

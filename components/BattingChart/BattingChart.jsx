@@ -29,17 +29,15 @@ const BattingChart = (props) => {
   const width = 800;
 
   return (
-    <div className="container">
-      <div className="section">
-        <div className="columns is-centered is-mobile">
-          <div className="column is-two-thirds-desktop is-two-thirds-tablet is-four-fifths-mobile">
-            <h1 style={{ paddingTop: "24px" }}>Stat Chart</h1>
-            <hr className={styles.greenHr} />
-          </div>
+    <div className={`container ${styles.customMobile}`}>
+      <div className="columns is-centered">
+        <div className="column is-two-thirds">
+          <h1 style={{ paddingTop: "24px" }}>Stat Chart</h1>
+          <hr className={styles.greenHr} />
         </div>
       </div>
-      <div className="columns is-centered is-mobile">
-        <div className="column is-half-desktop is-half-tablet is-full-mobile">
+      <div className="columns is-centered">
+        <div className="column is-half-desktop">
           <AutoSizer disableHeight>
             {({ width }) => (
               <Line
@@ -93,7 +91,7 @@ const BattingChart = (props) => {
             )}
           </AutoSizer>
         </div>
-        <div className="column is-one-fifth-desktop is-one-fifth-tablet is-full-mobile">
+        <div className="column is-one-fifth-desktop">
           <p>Displaying: {chartStat}</p>
 
           <button onClick={() => setChartStat("avg")}>Average</button>

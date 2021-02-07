@@ -7,8 +7,8 @@ const BattingStats = (props) => {
     <>
       {console.log(props)}
       <div className="container">
-        <div className="columns is-centered is-mobile">
-          <div className="column is-two-thirds-desktop is-two-thirds-tablet is-four-fifths-mobile">
+        <div className="columns is-centered">
+          <div className={`column is-two-thirds ${styles.customMobile}`}>
             <h1>Batting Stats</h1>
             <hr className={styles.greenHr} />
             <div className="table-container" style={{ overflowX: "scroll" }}>

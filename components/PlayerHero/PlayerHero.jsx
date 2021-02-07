@@ -25,7 +25,7 @@ const PlayerHero = (props) => {
                     Highlights <img src="/images/emoji_events-24px.svg" />
                   </span>
                 </div>
-                <div className="columns">
+                <div className="columns is-mobile">
                   <div className="column">
                     <p className={styles.highlightLabel}>HITS</p>
                     <p>{props.data.career_batting.hits}</p>
