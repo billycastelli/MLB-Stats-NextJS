@@ -1,6 +1,6 @@
 import styles from "./SearchResultCard.module.scss";
 import Router, { useRouter } from "next/router";
-import { cleanAverage } from "../utils/clean";
+import { cleanAverageString } from "../utils/clean";
 
 const SearchResultCard = (props) => {
   const router = useRouter();
@@ -19,7 +19,7 @@ const SearchResultCard = (props) => {
         <h3 className={styles.playerName}>{props.player.name}</h3>
         <p>
           {props.player.batting.filter((x) => x.stint == 1).length} yr &#903;{" "}
-          {cleanAverage(props.player.career_batting.avg)} AVG &#903;{" "}
+          {cleanAverageString(props.player.career_batting.avg)} AVG &#903;{" "}
           {props.player.career_batting.hits} Hits &#903;{" "}
           {props.player.career_batting.homeruns} HR{" "}
         </p>

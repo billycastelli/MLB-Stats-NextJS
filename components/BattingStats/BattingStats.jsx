@@ -1,5 +1,6 @@
 import styles from "./BattingStats.module.scss";
 import { CSVLink, CSVDownload } from "react-csv";
+import { cleanNan } from "../utils/clean";
 
 const BattingStats = (props) => {
   const years = props.batting.filter((line) => line.stint === 1).length;
@@ -48,7 +49,7 @@ const BattingStats = (props) => {
                       {Object.values(line)
                         .slice(1)
                         .map((stat, statIndex) => (
-                          <td key={statIndex}>{stat}</td>
+                          <td key={statIndex}>{cleanNan(stat)}</td>
                         ))}
                     </tr>
                   ))}
