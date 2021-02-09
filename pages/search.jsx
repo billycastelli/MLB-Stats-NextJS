@@ -6,6 +6,7 @@ import SearchInput from "../components/SearchInput/SearchInput";
 import SearchResults from "../components/SearchResults/SearchResults";
 import SearchPagination from "../components/SearchPagination/SearchPagination";
 import useSWR from "swr";
+import SearchQueryMeta from "../components/SearchResults/SearchQueryMeta";
 
 const fetcher = async (route, query_string, result_size, starting_index) => {
   try {
@@ -46,9 +47,6 @@ export default function SearchHome() {
         <Header />
 
         <div className="container">
-          <div style={{ marginTop: "18px" }}>
-            <SearchInput center={true} />
-          </div>
           {/* Idle state */}
           {!data && !router.query.q && (
             <div style={{ marginBottom: "600px" }}></div>
@@ -57,15 +55,18 @@ export default function SearchHome() {
           {/* Loading state */}
           {!data && router.query.q && (
             <div style={{ marginBottom: "600px" }}>
-              <div className="section">
-                <div className="columns is-centered">Searching...</div>
-              </div>
+              <SearchQueryMeta prefix="Searching for " query={router.query.q} />
             </div>
           )}
 
           {/* Data found */}
           {data && data.total.value && data.hits && data.hits !== [] && (
             <>
+              <SearchQueryMeta
+                prefix="Results for "
+                query={router.query.q}
+                count={data.total.value}
+              />
               <SearchResults results={data.hits} />
               <SearchPagination
                 router={router}

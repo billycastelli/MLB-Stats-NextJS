@@ -1,5 +1,6 @@
 import styles from "./Header.module.css";
 import Link from "next/link";
+import SearchInput from "../SearchInput/SearchInput";
 
 const Header = () => {
   return (
@@ -12,6 +13,9 @@ const Header = () => {
         </Link>
         {/* QuickStats */}
       </span>
+      <div className={styles.search}>
+        <SearchInput />
+      </div>
     </div>
   );
 };

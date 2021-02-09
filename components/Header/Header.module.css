@@ -1,7 +1,9 @@
 .header {
+  display: flex;
+  justify-content: space-between;
   background-color: rgb(255, 255, 255);
   border-bottom: 4px solid #32be20;
-  height: 48px;
+  /* height: 48px; */
 }
 
 .header_image {
@@ -23,4 +25,10 @@
   align-items: center;
   font-size: 18px;
   font-weight: 500;
+}
+
+.search {
+  display: flex;
+  margin: 8px;
+  /* align-items: flex-end; */
 }

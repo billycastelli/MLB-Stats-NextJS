@@ -33,11 +33,6 @@ const PlayerPage = () => {
   return (
     <>
       <Header />
-      <div className="container">
-        <div style={{ marginTop: "18px" }}>
-          <SearchInput center={true} />
-        </div>
-      </div>
       {data && data._source.player && data._source.player.batting && (
         <>
           <PlayerHero data={data._source.player} />
