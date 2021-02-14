@@ -17,7 +17,8 @@ const SearchResultCard = (props) => {
         onClick={() => handlePlayerClick(props.player.playerid)}
       >
         <h3 className={styles.playerName}>{props.player.name}</h3>
-        <p>
+        <p className={styles.careerStats}>
+          Career: {"  "}
           {props.player.batting.filter((x) => x.stint == 1).length} yr &#903;{" "}
           {cleanAverageString(props.player.career_batting.avg)} AVG &#903;{" "}
           {props.player.career_batting.hits} Hits &#903;{" "}

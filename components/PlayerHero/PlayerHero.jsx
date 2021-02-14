@@ -2,9 +2,12 @@ import styles from "./PlayerHero.module.scss";
 
 const PlayerHero = (props) => {
   return (
-    <div className="container">
-      <div className={`columns is-centered is-mobile ${styles.banner}`}>
-        <div className="column is-four-fifths-desktop is-four-fifths-tablet is-full-mobile">
+    <div className={`container ${styles.customMobile} ${styles.heroContainer}`}>
+      {/* <div classname="container"> */}
+      {/* <div className={`columns is-centered is-mobile ${styles.banner}`}>
+        <div className="column is-four-fifths-desktop is-four-fifths-tablet is-full-mobile"> */}
+      <div className="columns is-centered">
+        <div className="column is-two-thirds">
           <h1 className={styles.playerName}>{props.data.name}</h1>
           <hr />
           <div className="columns">
@@ -18,7 +21,7 @@ const PlayerHero = (props) => {
                 From: {props.data.birthcity}, {props.data.irthcountry}
               </p>
             </div>
-            <div className="column is-one-third">
+            <div className="column is-two-fifths">
               <div className={styles.quickStats}>
                 <div className={styles.quickStatsTitle}>
                   <span>

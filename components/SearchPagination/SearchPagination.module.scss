@@ -1,13 +1,14 @@
 .page-button-visible {
   visibility: visible;
-  padding: 8px;
+  padding: 6px 12px 6px 12px;
   border: 1px solid #0fb377;
-  border-radius: 12px;
+  border-radius: 6px;
   background-color: #ffffff;
   color: #0fb377;
   font-size: 1rem;
   outline: none;
   cursor: pointer;
+  margin-right: 4px;
 }
 .page-button-visible:hover {
   transition: linear 0.2s all;

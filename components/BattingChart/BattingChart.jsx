@@ -31,7 +31,9 @@ const BattingChart = (props) => {
   const width = 800;
 
   return (
-    <div className={`container ${styles.customMobile}`}>
+    <div
+      className={`container ${styles.customMobile} ${styles.chartContainer}`}
+    >
       <div className="columns is-centered">
         <div className="column is-two-thirds">
           <h1 style={{ paddingTop: "24px" }}>Stat Chart</h1>

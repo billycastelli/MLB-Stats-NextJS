@@ -26,27 +26,35 @@ const SearchPagination = ({ router, data, requestedResultSize }) => {
   };
 
   return (
-    <div className="columns is-centered">
-      {router.query.page <= 1 && (
-        <button onClick={toPrevPage} className={styles[`page-button-hidden`]}>
-          Prev
-        </button>
-      )}
-      {router.query.page > 1 && (
-        <button onClick={toPrevPage} className={styles[`page-button-visible`]}>
-          Prev
-        </button>
-      )}
-      {router.query.page * requestedResultSize >= data.total.value && (
-        <button onClick={toNextPage} className={styles[`page-button-hidden`]}>
-          Next
-        </button>
-      )}
-      {router.query.page * requestedResultSize < data.total.value && (
-        <button onClick={toNextPage} className={styles[`page-button-visible`]}>
-          Next
-        </button>
-      )}
+    <div className="container section" style={{ padding: "2 rem" }}>
+      <div className="columns is-centered is-mobile">
+        {router.query.page <= 1 && (
+          <button onClick={toPrevPage} className={styles[`page-button-hidden`]}>
+            Prev
+          </button>
+        )}
+        {router.query.page > 1 && (
+          <button
+            onClick={toPrevPage}
+            className={styles[`page-button-visible`]}
+          >
+            Prev
+          </button>
+        )}
+        {router.query.page * requestedResultSize >= data.total.value && (
+          <button onClick={toNextPage} className={styles[`page-button-hidden`]}>
+            Next
+          </button>
+        )}
+        {router.query.page * requestedResultSize < data.total.value && (
+          <button
+            onClick={toNextPage}
+            className={styles[`page-button-visible`]}
+          >
+            Next
+          </button>
+        )}
+      </div>
     </div>
   );
 };

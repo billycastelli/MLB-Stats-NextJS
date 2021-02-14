@@ -1,3 +1,7 @@
+.heroContainer {
+  margin-top: 24px;
+}
+
 .banner {
   //   background-color: rgb(80, 107, 124);
   padding: 32px;
@@ -19,6 +23,10 @@
   border: 1px solid rgb(218, 218, 218);
   text-align: center;
   background-color: white;
+  @media (max-width: 768px) {
+    // margin-left: 48px;
+    margin-right: 48px;
+  }
 }
 
 .quickStatsTitle {
@@ -29,4 +37,11 @@
 
 .highlightLabel {
   color: #aaa;
+}
+
+@media (max-width: 768px) {
+  .customMobile {
+    margin-left: 12px;
+    margin-right: 12px;
+  }
 }

@@ -7,8 +7,8 @@ const SearchResults = (props) => {
         <ul>
           {props.results.map((player, index) => (
             <>
-              <div className="columns is-centered">
-                <div className="column is-two-thirds  p-0">
+              <div className="columns is-centered is-mobile">
+                <div className="column is-two-thirds-desktop is-two-thirds-tablet is-four-fifths-mobile  p-0">
                   <SearchResultCard
                     player={player._source.player}
                     key={index}

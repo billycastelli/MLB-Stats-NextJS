@@ -6,7 +6,11 @@
   margin-left: 0px;
 }
 
-@media (max-width: 600px) {
+.chartContainer {
+  margin-bottom: 48px;
+}
+
+@media (max-width: 768px) {
   .customMobile {
     margin-left: 12px;
   }

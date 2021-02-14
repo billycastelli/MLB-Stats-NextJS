@@ -32,16 +32,10 @@ const StatSelectionDropdown = (props) => {
         <select
           onChange={(e) => updateOption(e)}
           className={styles.selectionItem}
+          defaultValue="homeruns"
         >
           {stats.map((stat) => {
-            return (
-              <option
-                value={stat}
-                selected={stat === "homeruns" ? "selected" : ""}
-              >
-                {stat}
-              </option>
-            );
+            return <option value={stat}>{stat}</option>;
           })}
         </select>
       </div>

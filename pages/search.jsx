@@ -35,13 +35,14 @@ export default function SearchHome() {
   );
 
   return (
-    <React.Fragment>
+    <>
       <Head>
         <link
           href="https://fonts.googleapis.com/css?family=Poppins"
           rel="stylesheet"
         />
         <meta name="viewport" content="width=device-width" />
+        <title>Search</title>
       </Head>
       <main>
         <Header />
@@ -74,20 +75,14 @@ export default function SearchHome() {
                 requestedResultSize={requestedResultSize}
               />
 
-              <p className="center-text">
+              {/* <p className="center-text">
                 Results found for '{router.query.q}': {data.total.value}
-              </p>
+              </p> */}
             </>
           )}
         </div>
         <Footer />
       </main>
-
-      <style jsx global>{`
-        .center-text {
-          text-align: center;
-        }
-      `}</style>
-    </React.Fragment>
+    </>
   );
 }
