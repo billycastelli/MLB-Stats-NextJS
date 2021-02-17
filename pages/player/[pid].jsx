@@ -1,10 +1,7 @@
 import Head from "next/head";
-
-import { useState, useEffect } from "react";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import SearchInput from "../../components/SearchInput/SearchInput";
 import PlayerHero from "../../components/PlayerHero/PlayerHero";
 import BattingStats from "../../components/BattingStats/BattingStats";
 import BattingChart from "../../components/BattingChart/BattingChart";
