@@ -10,9 +10,9 @@ import BattingStats from "../../components/BattingStats/BattingStats";
 import BattingChart from "../../components/BattingChart/BattingChart";
 import useSWR from "swr";
 
-const fetcher = async (route, pid) => {
+const fetcher = async (path) => {
   try {
-    const url = `https://gzsj6zuxel.execute-api.us-west-2.amazonaws.com/dev/${route}?playerid=${pid}`;
+    const url = `${process.env.NEXT_PUBLIC_LAMBDA_API_ENDPOINT}/${path}`;
     const response = await fetch(url, {
       mode: "cors",
     });
@@ -28,7 +28,7 @@ const PlayerPage = () => {
   const router = useRouter();
 
   const { data, error } = useSWR(
-    router.query.pid ? ["/player", router.query.pid] : null,
+    router.query.pid ? [`batting/${router.query.pid}`] : null,
     fetcher
   );
 
@@ -47,7 +47,6 @@ const PlayerPage = () => {
         )}
       </Head>
       <Header />
-
       {error && (
         <div className="container">
           <h1>Invalid player</h1>

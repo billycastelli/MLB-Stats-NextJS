@@ -34,8 +34,12 @@ const StatSelectionDropdown = (props) => {
           className={styles.selectionItem}
           defaultValue="homeruns"
         >
-          {stats.map((stat) => {
-            return <option value={stat}>{stat}</option>;
+          {stats.map((stat, index) => {
+            return (
+              <option value={stat} key={index}>
+                {stat}
+              </option>
+            );
           })}
         </select>
       </div>

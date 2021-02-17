@@ -1,18 +1,25 @@
+import useSWR from "swr";
+import { useRouter } from "next/router";
 import Head from "next/head";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
-import { useRouter } from "next/router";
-import SearchInput from "../components/SearchInput/SearchInput";
 import SearchResults from "../components/SearchResults/SearchResults";
 import SearchPagination from "../components/SearchPagination/SearchPagination";
-import useSWR from "swr";
 import SearchQueryMeta from "../components/SearchResults/SearchQueryMeta";
 
 const fetcher = async (route, query_string, result_size, starting_index) => {
   try {
-    const url = `https://gzsj6zuxel.execute-api.us-west-2.amazonaws.com/dev/${route}?name_input=${query_string}&result_size=${result_size}&starting_index=${starting_index}`;
+    console.log(process.env.NEXT_PUBLIC_TEST);
+    console.log(`${process.env.NEXT_PUBLIC_LAMBDA_API_ENDPOINT}/search`);
+    const url = `${process.env.NEXT_PUBLIC_LAMBDA_API_ENDPOINT}/search`;
     const response = await fetch(url, {
+      method: "POST",
       mode: "cors",
+      body: JSON.stringify({
+        name_input: query_string,
+        result_size: result_size,
+        starting_index: starting_index,
+      }),
     });
     const data = await response.json();
     return data;
