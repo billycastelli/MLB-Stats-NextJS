@@ -14,18 +14,18 @@ QuickStats is a Next.js application that allows the user to search, download, an
 | :-----------------------------------: | :-----------------------------------: |
 | ![](screenshots/cal-ripken-stats.png) | ![](screenshots/cal-ripken-graph.png) |
 
-## Frontend
+### Frontend
 
-The frontend of the application consists of custom styling creating with SCSS and the [Bulma](https://bulma.io) CSS Framework. SCSS modules are used to style the React components used on the site.
+The frontend of the application consists of custom styling created with SCSS and the [Bulma](https://bulma.io) CSS Framework. SCSS modules are used to style the React components used on the site.
 
-## Charts
+### Charts
 
 Charts displayed on the site are built with the wonderful [Nivo](https://nivo.rocks) component library.
 
-## Search
+### Search
 
-Statistics were loaded into an Elasticsearch cluster and exposed to the application via a REST API created with AWS lambda. Queries to Elasticsearch are enable accurate results relative to the input parameters. The REST API, created using the AWS CDK, is availible to view in the [backend repository](https://github.com/billycastelli/MLB-Stats-cdk).
+Statistics were loaded into an Elasticsearch cluster and exposed to the application via a REST API created with AWS Lambda and API Gateway. Queries to Elasticsearch are enable accurate results relative to the input parameters. The REST API, created using the AWS CDK, is available to view in the [backend repository](https://github.com/billycastelli/MLB-Stats-cdk).
 
-## Deployment
+### Deployment
 
 Automated deployments are enabled using the [Vercel](https://vercel.com/) deployment framework.
