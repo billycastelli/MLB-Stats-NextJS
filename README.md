@@ -1,13 +1,31 @@
 # QuickStats
 
+QuickStats is a Next.js application that allows the user to search, download, and graphically view decades of Major League Baseball statistics. Initial data dump provided by [Lahman's Baseball Database](http://www.seanlahman.com/baseball-archive/statistics/).
+
 **Available live at**: https://elastic-mlb-stats.vercel.app
 
-Quickly search through decades of Major League Baseball statistics using Elasticsearch. Initial data dump provided by [Lahman's Baseball Database](http://www.seanlahman.com/baseball-archive/statistics/).
+#### Homepage
 
-![Alt text](screenshots/home.png "Welcome Page")
+<p float="left">
+  <img src="screenshots/home.png" width="600" />
+</p>
 
 |          Batting Statistics           |            Graph any stat             |
 | :-----------------------------------: | :-----------------------------------: |
 | ![](screenshots/cal-ripken-stats.png) | ![](screenshots/cal-ripken-chart.png) |
 
-QuickStats is a Next.js application that allows the user to search, download, and graphically view decades of Major League Baseball statistics.
+## Frontend
+
+The frontend of the application consists of custom styling creating with SCSS and the [Bulma](https://bulma.io) CSS Framework. SCSS modules are used to style the React components used on the site.
+
+## Charts
+
+Charts displayed on the site are built with the wonderful [Nivo](https://nivo.rocks) component library.
+
+## Search
+
+Statistics were loaded into an Elasticsearch cluster and exposed to the application via a REST API created with AWS lambda. Queries to Elasticsearch are enable accurate results relative to the input parameters. The REST API, created using the AWS CDK, is availible to view in the [backend repository](https://github.com/billycastelli/MLB-Stats-cdk).
+
+## Deployment
+
+Automated deployments are enabled using the [Vercel](https://vercel.com/) deployment framework.
