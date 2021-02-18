@@ -12,7 +12,7 @@ QuickStats is a Next.js application that allows the user to search, download, an
 
 |          Batting Statistics           |            Graph any stat             |
 | :-----------------------------------: | :-----------------------------------: |
-| ![](screenshots/cal-ripken-stats.png) | ![](screenshots/cal-ripken-chart.png) |
+| ![](screenshots/cal-ripken-stats.png) | ![](screenshots/cal-ripken-graph.png) |
 
 ## Frontend
 
