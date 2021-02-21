@@ -18,7 +18,7 @@ const PlayerHero = (props) => {
                 {props.data.birthyear}
               </p>
               <p>
-                From: {props.data.birthcity}, {props.data.irthcountry}
+                From: {props.data.birthcity}, {props.data.birthcountry}
               </p>
             </div>
             <div className="column is-two-fifths">

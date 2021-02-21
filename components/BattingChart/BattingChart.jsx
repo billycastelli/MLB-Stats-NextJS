@@ -71,6 +71,7 @@ const BattingChart = (props) => {
                       legendOffset: 48,
                       legendPosition: "center",
                       size: "16px",
+                      format: (e) => Math.floor(e) === e && e,
                     }}
                     axisLeft={{
                       tickSize: 5,
