@@ -6,6 +6,9 @@ const cleanAverageString = (avg) => {
 };
 
 const cleanNan = (stat) => {
+  if (typeof stat === "string") {
+    return stat;
+  }
   if (isNaN(stat)) {
     return 0;
   }

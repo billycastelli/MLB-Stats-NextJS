@@ -49,7 +49,10 @@ const BattingStats = (props) => {
                       {Object.values(line)
                         .slice(1)
                         .map((stat, statIndex) => (
-                          <td key={statIndex}>{cleanNan(stat)}</td>
+                          <>
+                            {console.log(stat)}
+                            <td key={statIndex}>{cleanNan(stat)}</td>
+                          </>
                         ))}
                     </tr>
                   ))}
