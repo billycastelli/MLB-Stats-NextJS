@@ -24,7 +24,7 @@ Charts displayed on the site are built with the wonderful [Nivo](https://nivo.ro
 
 ### Search
 
-Statistics were loaded into an Elasticsearch cluster and exposed to the application via a REST API created with AWS Lambda and API Gateway. Queries to Elasticsearch are enable accurate results relative to the input parameters. The REST API, created using the AWS CDK, is available to view in the [backend repository](https://github.com/billycastelli/MLB-Stats-cdk).
+Statistics were loaded into an Elasticsearch cluster and exposed to the application via a REST API created with AWS Lambda and API Gateway. Queries to Elasticsearch  enable accurate results relative to the input parameters. The REST API, created using the AWS CDK, is available to view in the [backend repository](https://github.com/billycastelli/MLB-Stats-cdk).
 
 ### Deployment
 
