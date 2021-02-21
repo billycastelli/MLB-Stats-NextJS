@@ -54,7 +54,7 @@ const BattingChart = (props) => {
                     xScale={{ type: "linear", min: "auto", max: "auto" }}
                     yScale={{
                       type: "linear",
-                      min: "auto",
+                      min: 0,
                       max: "auto",
                       stacked: true,
                       reverse: false,
@@ -80,6 +80,7 @@ const BattingChart = (props) => {
                       legend: `${chartStat}`,
                       legendOffset: -40,
                       legendPosition: "start",
+                      format: (e) => Math.floor(e) === e && e,
                     }}
                     pointLabelYOffset={-12}
                     useMesh={true}
