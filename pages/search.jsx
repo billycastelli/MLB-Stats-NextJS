@@ -9,8 +9,6 @@ import SearchQueryMeta from "../components/SearchResults/SearchQueryMeta";
 
 const fetcher = async (route, query_string, result_size, starting_index) => {
   try {
-    console.log(process.env.NEXT_PUBLIC_TEST);
-    console.log(`${process.env.NEXT_PUBLIC_LAMBDA_API_ENDPOINT}/search`);
     const url = `${process.env.NEXT_PUBLIC_LAMBDA_API_ENDPOINT}/search`;
     const response = await fetch(url, {
       method: "POST",

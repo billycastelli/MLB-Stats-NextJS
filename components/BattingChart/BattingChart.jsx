@@ -20,6 +20,18 @@ const BattingChart = (props) => {
       }).bind(null, chartStat)
     );
 
+  // Extend this to take a list of player data batting
+  // const statData = props.batting.
+  // .filter((line) => line.stint === 1)
+  // .map(
+  //   ((stat, line) => {
+  //     return {
+  //       x: `${line.yearid}`,
+  //       y: cleanNan(line[`${stat}`]),
+  //     };
+  //   }).bind(null, chartStat)
+  // );
+
   const data = [
     {
       id: chartStat,
