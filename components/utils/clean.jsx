@@ -15,4 +15,17 @@ const cleanNan = (stat) => {
   return stat;
 };
 
-module.exports = { cleanAverageString, cleanNan };
+const cleanChartStats = (battingStats, chartStat) => {
+  return battingStats
+    .filter((line) => line.stint === 1)
+    .map(
+      ((stat, line) => {
+        return {
+          x: parseInt(`${line.yearid}`),
+          y: cleanNan(line[`${stat}`]),
+        };
+      }).bind(null, chartStat)
+    );
+};
+
+module.exports = { cleanAverageString, cleanNan, cleanChartStats };

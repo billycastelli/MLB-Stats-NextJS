@@ -5,28 +5,15 @@ import Footer from "../../components/Footer/Footer";
 import PlayerHero from "../../components/PlayerHero/PlayerHero";
 import BattingStats from "../../components/BattingStats/BattingStats";
 import BattingChart from "../../components/BattingChart/BattingChart";
+import { pidFetcher } from "../../components/utils/fetchers";
 import useSWR from "swr";
-
-const fetcher = async (path) => {
-  try {
-    const url = `${process.env.NEXT_PUBLIC_LAMBDA_API_ENDPOINT}/${path}`;
-    const response = await fetch(url, {
-      mode: "cors",
-    });
-    const data = await response.json();
-    return data;
-  } catch (e) {
-    console.log(e);
-    throw e;
-  }
-};
 
 const PlayerPage = () => {
   const router = useRouter();
 
   const { data, error } = useSWR(
     router.query.pid ? [`batting/${router.query.pid}`] : null,
-    fetcher
+    pidFetcher
   );
 
   return (
@@ -57,10 +44,7 @@ const PlayerPage = () => {
             career={data._source.player.career_batting}
             playerid={data._source.player.playerid}
           />
-          <BattingChart
-            batting={data._source.player.batting}
-            playerName={data._source.player.name}
-          />
+          <BattingChart playerData={[data]} />
         </>
       )}
       <Footer />

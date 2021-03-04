@@ -5,31 +5,29 @@ import { AutoSizer } from "react-virtualized";
 import { useState } from "react";
 import GraphTooltip from "./GraphTooltip";
 import StatSelectionDropdown from "./StatSelectionDropdown";
-import { cleanNan } from "./../utils/clean";
+import { cleanChartStats } from "./../utils/clean";
 
 const BattingChart = (props) => {
   const [chartStat, setChartStat] = useState("homeruns");
-  const statData = props.batting
-    .filter((line) => line.stint === 1)
-    .map(
-      ((stat, line) => {
-        return {
-          x: `${line.yearid}`,
-          y: cleanNan(line[`${stat}`]),
-        };
-      }).bind(null, chartStat)
-    );
 
-  const data = [
-    {
-      id: chartStat,
-      color: "rgb(86, 168, 191)",
-      data: statData,
-    },
-  ];
-  const height = 500;
+  // let allStats = [];
+  // for (let player of props.playerData) {
+  //   console.log(player);
+  //   const statData = cleanChartStats(player._source.player.batting, chartStat);
+  //   allStats.push(statData);
+  // }
+
+  const playerData = [];
+  for (let p of props.playerData) {
+    playerData.push({
+      id: p._source.player.name,
+      data: cleanChartStats(p._source.player.batting, chartStat),
+    });
+  }
+
+  console.log(playerData);
+
   const width = 800;
-
   return (
     <div
       className={`container ${styles.customMobile} ${styles.chartContainer}`}
@@ -46,17 +44,16 @@ const BattingChart = (props) => {
               <AutoSizer disableHeight>
                 {({ width }) => (
                   <Line
-                    data={data}
-                    margin={{ top: 40, right: 24, bottom: 64, left: 48 }}
+                    data={playerData}
+                    margin={{ top: 40, right: 12, bottom: 64, left: 48 }}
                     height={500}
                     width={width}
-                    colors={{ datum: "color" }}
+                    colors={{ scheme: "category10" }}
                     xScale={{ type: "linear", min: "auto", max: "auto" }}
                     yScale={{
                       type: "linear",
                       min: 0,
                       max: "auto",
-                      stacked: true,
                       reverse: false,
                     }}
                     axisTop={null}
@@ -84,10 +81,35 @@ const BattingChart = (props) => {
                     }}
                     pointLabelYOffset={-12}
                     useMesh={true}
+                    legends={[
+                      {
+                        anchor: "top-left",
+                        direction: "column",
+                        justify: false,
+                        itemsSpacing: 0,
+                        itemDirection: "left-to-right",
+                        itemWidth: 80,
+                        itemHeight: 20,
+                        itemOpacity: 0.75,
+                        symbolSize: 12,
+                        symbolShape: "circle",
+                        symbolBorderColor: "rgba(0, 0, 0, .5)",
+                        effects: [
+                          {
+                            on: "hover",
+                            style: {
+                              itemBackground: "rgba(0, 0, 0, .03)",
+                              itemOpacity: 1,
+                            },
+                          },
+                        ],
+                      },
+                    ]}
                     tooltip={(input) => {
+                      console.log(input);
                       return (
                         <GraphTooltip
-                          playerName={props.playerName}
+                          playerName={input.point.serieId}
                           chartStat={chartStat}
                           statValue={input.point.data.y}
                           year={input.point.data.x}
