@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import Router, { useRouter } from "next/router";
 import useSWR from "swr";
-import BattingChart from "../components/BattingChart/BattingChart";
 
 import Head from "next/head";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
+import PlayerItem from "../components/PlayerItem/PlayerItem";
+import ComparisonChart from "../components/ComparisonChart/ComparisonChart";
 
 const fetcher = async (route, query_string, result_size, starting_index) => {
   try {
@@ -73,8 +74,15 @@ const SelectorBox = (props) => {
       : null,
     fetcher
   );
-  console.log(data);
+  //   console.log(data);
   const addPlayer = (playerid) => {
+    if (router.query.players) {
+      const playersString = router.query.players;
+      const playersArr = playersString.split("+");
+      if (playersArr.includes(playerid)) {
+        return;
+      }
+    }
     Router.push({
       pathname: router.pathname,
       query: {
@@ -83,8 +91,8 @@ const SelectorBox = (props) => {
         }${playerid}+`,
       },
     });
-    console.log(playerid);
   };
+
   return (
     <>
       <p>Results for {props.query}</p>
@@ -104,51 +112,23 @@ const SelectorBox = (props) => {
   );
 };
 
-const ComparisonChart = (props) => {
-  const router = useRouter();
-  const [datas, setDatas] = useState([]);
-  const fetcher = async (path) => {
-    try {
-      const url = `${process.env.NEXT_PUBLIC_LAMBDA_API_ENDPOINT}/batting/${path}`;
-      const response = await fetch(url, {
-        mode: "cors",
-      });
-      const data = await response.json();
-      return data;
-    } catch (e) {
-      console.log(e);
-      throw e;
-    }
-  };
-
-  useEffect(() => {
-    const getAllPlayers = async () => {
-      let datas = [];
-      for (let player of props.players) {
-        const playerData = await fetcher(player);
-        datas.push(playerData);
-      }
-      setDatas(datas);
-    };
-    getAllPlayers();
-  }, [router.query]);
-  console.log(datas);
-
-  return (
-    <>
-      {datas.length > 0 && (
-        <BattingChart
-          batting={datas[0]._source.player.batting}
-          playerName={datas[0]._source.player.name}
-        />
-      )}
-    </>
-  );
-};
-
 const ComparisonPage = () => {
   const router = useRouter();
   const [query, setQuery] = useState(undefined);
+  const removePlayer = (playerid) => {
+    if (router.query.players) {
+      const oldPlayerString = router.query.players;
+      const oldPlayerArr = oldPlayerString.split("+");
+      const newPlayerArr = oldPlayerArr.filter((player) => player !== playerid);
+      const newPlayerString = newPlayerArr.join("+");
+      Router.push({
+        pathname: router.pathname,
+        query: {
+          players: newPlayerString,
+        },
+      });
+    }
+  };
   return (
     <>
       <Head>
@@ -161,17 +141,48 @@ const ComparisonPage = () => {
       </Head>
       <main>
         <Header />
-        <h1>Player comparison</h1>
-        <SearchInput setQuery={setQuery} />
-        {query && <SelectorBox query={query} />}
-        {router.query.players && (
-          <ComparisonChart
-            players={decodeURIComponent(router.query.players)
-              .split("+")
-              .filter((x) => x)}
-          />
-        )}
-
+        <div className="container">
+          {/* <div className="columns"> */}
+          {/* <div className="column is-one-quarter"> */}
+          <h1>Player comparison</h1>
+          <div className="columns">
+            <div className="column">
+              <SearchInput setQuery={setQuery} />
+              {query && <SelectorBox query={query} />}
+            </div>
+            <div className="column">
+              {router.query.players && (
+                <>
+                  {router.query.players
+                    .split("+")
+                    .slice(0, -1)
+                    .map((player, index) => {
+                      return (
+                        <PlayerItem
+                          key={index}
+                          playerid={player}
+                          removePlayer={removePlayer}
+                        />
+                      );
+                    })}
+                </>
+              )}
+            </div>
+          </div>
+          {/* </div> */}
+          {/* <div className="column"> */}
+          {router.query.players && (
+            <>
+              <ComparisonChart
+                players={decodeURIComponent(router.query.players)
+                  .split("+")
+                  .filter((x) => x)}
+              />
+            </>
+          )}
+          {/* </div> */}
+          {/* </div> */}
+        </div>
         <Footer />
       </main>
     </>

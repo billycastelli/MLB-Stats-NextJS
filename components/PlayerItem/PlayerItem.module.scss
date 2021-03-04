@@ -1,0 +1,18 @@
+.playerItem {
+  position: relative;
+  border: 1px solid rgb(207, 206, 206);
+  border-radius: 8px;
+  padding: 8px;
+  margin-bottom: 8px;
+  overflow: auto;
+}
+
+.playerItemText {
+  display: inline;
+  font-size: 24px;
+  margin-right: 8px;
+}
+
+.removePlayerButton {
+  float: right;
+}
