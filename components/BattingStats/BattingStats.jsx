@@ -1,12 +1,11 @@
 import styles from "./BattingStats.module.scss";
 import { CSVLink, CSVDownload } from "react-csv";
-import { cleanNan } from "../utils/clean";
+import { cleanNanDisplay } from "../utils/clean";
 
 const BattingStats = (props) => {
   const years = props.batting.filter((line) => line.stint === 1).length;
   return (
     <>
-      {console.log(props)}
       <div className="container">
         <div className="columns is-centered">
           <div className={`column is-two-thirds ${styles.customMobile}`}>
@@ -49,10 +48,9 @@ const BattingStats = (props) => {
                       {Object.values(line)
                         .slice(1)
                         .map((stat, statIndex) => (
-                          <>
-                            {console.log(stat)}
-                            <td key={statIndex}>{cleanNan(stat)}</td>
-                          </>
+                          <td key={`${yearIndex} ${statIndex}`}>
+                            {cleanNanDisplay(stat)}
+                          </td>
                         ))}
                     </tr>
                   ))}
@@ -73,28 +71,11 @@ const BattingStats = (props) => {
               </table>
             </div>
             <CSVLink data={props.batting} filename={`${props.playerid}.csv`}>
-              Download Batting stats as CSV
+              Download Batting Statistics as CSV
             </CSVLink>
           </div>
         </div>
       </div>
-      {/* <style jsx>{`
-          .scrollable {
-            overflow-x: auto;
-            width: 100%;
-          }
-          table,
-          th,
-          td {
-            border: 1px solid black;
-            position: sticky;
-            top: 0;
-            z-index: 999;
-            border-collapse: collapse;
-            padding: 6px;
-            margin: 0 auto;
-          }
-        `}</style> */}
     </>
   );
 };
