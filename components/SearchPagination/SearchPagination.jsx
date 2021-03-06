@@ -3,9 +3,7 @@ import styles from "./SearchPagination.module.scss";
 const SearchPagination = ({ router, data, requestedResultSize }) => {
   const toNextPage = () => {
     let currentPage = parseInt(router.query.page);
-    console.log(currentPage);
     let nextPage = ++currentPage;
-    console.log(nextPage);
 
     router.push({
       pathname: router.pathname,
@@ -15,9 +13,7 @@ const SearchPagination = ({ router, data, requestedResultSize }) => {
 
   const toPrevPage = () => {
     let currentPage = parseInt(router.query.page);
-    console.log(currentPage);
     let prevPage = --currentPage;
-    console.log(prevPage);
 
     router.push({
       pathname: router.pathname,

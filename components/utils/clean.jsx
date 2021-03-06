@@ -5,9 +5,23 @@ const cleanAverageString = (avg) => {
   return avg;
 };
 
-const cleanNan = (stat) => {
+const cleanNanDisplay = (stat) => {
   if (typeof stat === "string") {
     if (stat == "") {
+      return "-";
+    }
+    return stat;
+  }
+
+  if (isNaN(stat)) {
+    return 0;
+  }
+  return stat;
+};
+
+const cleanNanChart = (stat) => {
+  if (typeof stat === "string") {
+    if (stat === "-" || stat === "") {
       return 0;
     }
     return stat;
@@ -26,10 +40,15 @@ const cleanChartStats = (battingStats, chartStat) => {
       ((stat, line) => {
         return {
           x: parseInt(`${line.yearid}`),
-          y: cleanNan(line[`${stat}`]),
+          y: cleanNanChart(line[`${stat}`]),
         };
       }).bind(null, chartStat)
     );
 };
 
-module.exports = { cleanAverageString, cleanNan, cleanChartStats };
+module.exports = {
+  cleanAverageString,
+  cleanNanDisplay,
+  cleanNanChart,
+  cleanChartStats,
+};
