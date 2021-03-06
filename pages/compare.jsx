@@ -74,7 +74,6 @@ const SelectorBox = (props) => {
       : null,
     fetcher
   );
-  //   console.log(data);
   const addPlayer = (playerid) => {
     if (router.query.players) {
       const playersString = router.query.players;

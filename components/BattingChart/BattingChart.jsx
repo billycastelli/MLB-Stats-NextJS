@@ -10,13 +10,6 @@ import { cleanChartStats } from "./../utils/clean";
 const BattingChart = (props) => {
   const [chartStat, setChartStat] = useState("homeruns");
 
-  // let allStats = [];
-  // for (let player of props.playerData) {
-  //   console.log(player);
-  //   const statData = cleanChartStats(player._source.player.batting, chartStat);
-  //   allStats.push(statData);
-  // }
-
   const playerData = [];
   for (let p of props.playerData) {
     playerData.push({
@@ -24,8 +17,6 @@ const BattingChart = (props) => {
       data: cleanChartStats(p._source.player.batting, chartStat),
     });
   }
-
-  console.log(playerData);
 
   const width = 800;
   return (
@@ -106,7 +97,6 @@ const BattingChart = (props) => {
                       },
                     ]}
                     tooltip={(input) => {
-                      console.log(input);
                       return (
                         <GraphTooltip
                           playerName={input.point.serieId}

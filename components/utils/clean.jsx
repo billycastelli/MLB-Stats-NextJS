@@ -7,8 +7,12 @@ const cleanAverageString = (avg) => {
 
 const cleanNan = (stat) => {
   if (typeof stat === "string") {
+    if (stat == "") {
+      return 0;
+    }
     return stat;
   }
+
   if (isNaN(stat)) {
     return 0;
   }
