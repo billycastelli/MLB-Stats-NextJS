@@ -132,59 +132,57 @@ const ComparisonPage = () => {
   return (
     <>
       <Head>
-        <link
-          href="https://fonts.googleapis.com/css?family=Poppins"
-          rel="stylesheet"
-        />
         <meta name="viewport" content="width=device-width" />
         <title>Player comparison</title>
       </Head>
-      <main>
+      <div className="flex-page">
         <Header />
-        <div className="container">
-          {/* <div className="columns"> */}
-          {/* <div className="column is-one-quarter"> */}
-          <h1>Player comparison</h1>
-          <div className="columns">
-            <div className="column">
-              <SearchInput setQuery={setQuery} />
-              {query && <SelectorBox query={query} />}
+        <main className="flex-content">
+          <div className="container">
+            {/* <div className="columns"> */}
+            {/* <div className="column is-one-quarter"> */}
+            <h1>Player comparison</h1>
+            <div className="columns">
+              <div className="column">
+                <SearchInput setQuery={setQuery} />
+                {query && <SelectorBox query={query} />}
+              </div>
+              <div className="column">
+                {router.query.players && (
+                  <>
+                    {router.query.players
+                      .split("+")
+                      .slice(0, -1)
+                      .map((player, index) => {
+                        return (
+                          <PlayerItem
+                            key={index}
+                            playerid={player}
+                            removePlayer={removePlayer}
+                          />
+                        );
+                      })}
+                  </>
+                )}
+              </div>
             </div>
-            <div className="column">
-              {router.query.players && (
-                <>
-                  {router.query.players
+            {/* </div> */}
+            {/* <div className="column"> */}
+            {router.query.players && (
+              <>
+                <ComparisonChart
+                  players={decodeURIComponent(router.query.players)
                     .split("+")
-                    .slice(0, -1)
-                    .map((player, index) => {
-                      return (
-                        <PlayerItem
-                          key={index}
-                          playerid={player}
-                          removePlayer={removePlayer}
-                        />
-                      );
-                    })}
-                </>
-              )}
-            </div>
+                    .filter((x) => x)}
+                />
+              </>
+            )}
+            {/* </div> */}
+            {/* </div> */}
           </div>
-          {/* </div> */}
-          {/* <div className="column"> */}
-          {router.query.players && (
-            <>
-              <ComparisonChart
-                players={decodeURIComponent(router.query.players)
-                  .split("+")
-                  .filter((x) => x)}
-              />
-            </>
-          )}
-          {/* </div> */}
-          {/* </div> */}
-        </div>
+        </main>
         <Footer />
-      </main>
+      </div>
     </>
   );
 };

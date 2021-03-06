@@ -30,24 +30,28 @@ const PlayerPage = () => {
           <title>{router.query.pid}'s stats</title>
         )}
       </Head>
-      <Header />
-      {error && (
-        <div className="container">
-          <h1>Invalid player</h1>
-        </div>
-      )}
-      {data && data._source.player && data._source.player.batting && (
-        <>
-          <PlayerHero data={data._source.player} />
-          <BattingStats
-            batting={data._source.player.batting}
-            career={data._source.player.career_batting}
-            playerid={data._source.player.playerid}
-          />
-          <BattingChart playerData={[data]} />
-        </>
-      )}
-      <Footer />
+      <div className="flex-page">
+        <Header />
+        <main className="flex-content">
+          {error && (
+            <div className="container">
+              <h1>Invalid player</h1>
+            </div>
+          )}
+          {data && data._source.player && data._source.player.batting && (
+            <>
+              <PlayerHero data={data._source.player} />
+              <BattingStats
+                batting={data._source.player.batting}
+                career={data._source.player.career_batting}
+                playerid={data._source.player.playerid}
+              />
+              <BattingChart playerData={[data]} />
+            </>
+          )}
+          <Footer />
+        </main>
+      </div>
     </>
   );
 };
