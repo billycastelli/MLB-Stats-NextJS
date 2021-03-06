@@ -3,28 +3,10 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
+import { searchFetcher, SearchFetcher } from "../components/utils/fetchers";
 import SearchResults from "../components/SearchResults/SearchResults";
 import SearchPagination from "../components/SearchPagination/SearchPagination";
 import SearchQueryMeta from "../components/SearchResults/SearchQueryMeta";
-
-const fetcher = async (route, query_string, result_size, starting_index) => {
-  try {
-    const url = `${process.env.NEXT_PUBLIC_LAMBDA_API_ENDPOINT}/search`;
-    const response = await fetch(url, {
-      method: "POST",
-      mode: "cors",
-      body: JSON.stringify({
-        name_input: query_string,
-        result_size: result_size,
-        starting_index: starting_index,
-      }),
-    });
-    const data = await response.json();
-    return data;
-  } catch (e) {
-    console.log(e);
-  }
-};
 
 export default function SearchHome() {
   const router = useRouter();
@@ -36,7 +18,7 @@ export default function SearchHome() {
     router.query.q && result_size && starting_index >= 0
       ? ["/players", router.query.q, result_size, starting_index]
       : null,
-    fetcher
+    searchFetcher
   );
 
   return (
