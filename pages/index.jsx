@@ -17,17 +17,14 @@ const HomePage = () => {
         <meta name="viewport" content="width=device-width" />
         <title>MLB Stats</title>
       </Head>
-      <main>
+      <div className="flex-page">
         <Header />
-        <WelcomeSegment />
-        <AboutInfo />
-
-        {/* <div>
-          <p>Information provided by the Lahman Baseball Database</p>
-
-        </div> */}
+        <main className="flex-content">
+          <WelcomeSegment />
+          <AboutInfo />
+        </main>
         <Footer />
-      </main>
+      </div>
     </>
   );
 };

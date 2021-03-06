@@ -1,14 +1,11 @@
 @import "../node_modules/bulma/bulma.sass";
 
-html {
-  margin: 0;
-  font-family: "Lato", sans-serif;
-}
-
+html,
 body {
   margin: 0;
   padding: 0;
   font-family: "Lato", sans-serif;
+  height: 100%;
 }
 
 html,
@@ -20,4 +17,14 @@ p {
 h1 {
   font-family: "Lato", sans-serif;
   font-size: 2em;
+}
+
+.flex-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.flex-content {
+  flex: 1 0 auto;
 }

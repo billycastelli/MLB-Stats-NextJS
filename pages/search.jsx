@@ -49,45 +49,49 @@ export default function SearchHome() {
         <meta name="viewport" content="width=device-width" />
         <title>Search</title>
       </Head>
-      <main>
+      <div className="flex-page">
         <Header />
+        <main className="flex-content">
+          <div className="container">
+            {/* Idle state */}
+            {!data && !router.query.q && (
+              <div style={{ marginBottom: "600px" }}></div>
+            )}
 
-        <div className="container">
-          {/* Idle state */}
-          {!data && !router.query.q && (
-            <div style={{ marginBottom: "600px" }}></div>
-          )}
+            {/* Loading state */}
+            {!data && router.query.q && (
+              <div style={{ marginBottom: "600px" }}>
+                <SearchQueryMeta
+                  prefix="Searching for "
+                  query={router.query.q}
+                />
+              </div>
+            )}
 
-          {/* Loading state */}
-          {!data && router.query.q && (
-            <div style={{ marginBottom: "600px" }}>
-              <SearchQueryMeta prefix="Searching for " query={router.query.q} />
-            </div>
-          )}
+            {/* Data found */}
+            {data && data.total.value && data.hits && data.hits !== [] && (
+              <>
+                <SearchQueryMeta
+                  prefix="Results for "
+                  query={router.query.q}
+                  count={data.total.value}
+                />
+                <SearchResults results={data.hits} />
+                <SearchPagination
+                  router={router}
+                  data={data}
+                  requestedResultSize={requestedResultSize}
+                />
 
-          {/* Data found */}
-          {data && data.total.value && data.hits && data.hits !== [] && (
-            <>
-              <SearchQueryMeta
-                prefix="Results for "
-                query={router.query.q}
-                count={data.total.value}
-              />
-              <SearchResults results={data.hits} />
-              <SearchPagination
-                router={router}
-                data={data}
-                requestedResultSize={requestedResultSize}
-              />
-
-              {/* <p className="center-text">
+                {/* <p className="center-text">
                 Results found for '{router.query.q}': {data.total.value}
               </p> */}
-            </>
-          )}
-        </div>
+              </>
+            )}
+          </div>
+        </main>
         <Footer />
-      </main>
+      </div>
     </>
   );
 }
