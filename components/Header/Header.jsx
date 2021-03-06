@@ -13,7 +13,13 @@ const Header = () => {
         </Link>
         {/* QuickStats */}
       </span>
+
       <div className={styles.search}>
+        <div className={styles.headerLink}>
+          <Link href="/compare">
+            <a>Comparison Tool</a>
+          </Link>
+        </div>
         <SearchInput />
       </div>
     </div>
