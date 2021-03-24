@@ -10,8 +10,9 @@ const CompareInput = (props) => {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    props.setQuery(searchInput);
+    props.updateQuery(searchInput);
   };
+
   return (
     <div className={`field has-addons ${styles["compare-input-div"]}`}>
       <div className="control">

@@ -6,15 +6,8 @@ import useSWR from "swr";
 import Loader from "../Loader/Loader";
 
 const CompareResults = (props) => {
-  // By default, show the results
-  const [display, setDisplay] = useState(true);
-
-  // On rerender (when the query changes), reset the display
-  useEffect(() => {
-    setDisplay(true);
-  }, [props.query]);
-
   const router = useRouter();
+
   const result_size = 15;
   let starting_index = 0;
   const { data, error } = useSWR(
@@ -23,7 +16,6 @@ const CompareResults = (props) => {
       : null,
     searchFetcher
   );
-  console.log(data);
 
   const addPlayer = (playerid) => {
     if (router.query.players) {
@@ -35,7 +27,7 @@ const CompareResults = (props) => {
     }
 
     // Stop displaying result list on selection
-    setDisplay(false);
+    props.setDisplay(false);
     Router.push({
       pathname: router.pathname,
       query: {
@@ -48,18 +40,24 @@ const CompareResults = (props) => {
 
   return (
     <>
-      {display && (
+      {props.display && (
         <div className={`${styles.resultsContainer}`}>
           <div className={styles.resultsTitleContainer}>
             <p>Results for {props.query}</p>
             <img
               className={styles.closeIcon}
               src="/cancel-24px.svg"
-              onClick={() => setDisplay(false)}
+              onClick={() => props.setDisplay(false)}
             />
           </div>
           {!data && !error && <Loader text="Searching..." />}
-          {data && (
+          {data && data.hits && data.hits.length == 0 && (
+            <>
+              <p>No results found</p>
+            </>
+          )}
+
+          {data && data.hits && data.hits.length > 0 && (
             <div className={styles.listContainer}>
               {data.hits.map((hit, index) => (
                 <p>
