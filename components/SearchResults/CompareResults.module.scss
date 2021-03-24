@@ -1,6 +1,31 @@
 .playerResult {
   display: inline-block;
-  text-indent: 12px;
+  text-indent: 8px;
   color: #5196f1;
   cursor: pointer;
+}
+
+.resultsContainer {
+  border: 1px solid #dedede;
+  border-radius: 4px;
+  width: 50%;
+  padding: 8px;
+}
+
+.closeIcon:hover {
+  cursor: pointer;
+}
+
+.resultsTitleContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.listContainer {
+  margin-top: 4px;
+  margin-left: 2px;
+}
+
+.addIcon {
+  font-size: 1.2em;
 }

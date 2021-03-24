@@ -1,0 +1,24 @@
+.loadingDiv {
+  display: flex;
+  align-items: center;
+}
+
+.loadingText {
+  display: inline;
+}
+
+.spin {
+  animation: rotation 2s infinite linear;
+  height: 28px;
+  width: 28px;
+  display: inline;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
