@@ -14,9 +14,12 @@ QuickStats is a Next.js application that allows the user to search, download, an
 | :-----------------------------------: | :-----------------------------------: |
 | ![](screenshots/cal-ripken-stats.png) | ![](screenshots/cal-ripken-graph.png) |
 
+#### Compare any set of players
+
 <p float="left">
   <img src="screenshots/compare.png" width="600" />
 </p>
+
 ### Frontend
 
 The frontend of the application consists of custom styling created with SCSS and the [Bulma](https://bulma.io) CSS Framework. SCSS modules are used to style the React components used on the site.
