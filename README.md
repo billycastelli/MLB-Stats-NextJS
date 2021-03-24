@@ -14,6 +14,10 @@ QuickStats is a Next.js application that allows the user to search, download, an
 | :-----------------------------------: | :-----------------------------------: |
 | ![](screenshots/cal-ripken-stats.png) | ![](screenshots/cal-ripken-graph.png) |
 
+|  Compare any set of players  |
+| :--------------------------: |
+| ![](screenshots/compare.png) |
+
 ### Frontend
 
 The frontend of the application consists of custom styling created with SCSS and the [Bulma](https://bulma.io) CSS Framework. SCSS modules are used to style the React components used on the site.
@@ -24,9 +28,9 @@ Charts displayed on the site are built with the wonderful [Nivo](https://nivo.ro
 
 ### Search
 
-Statistics were loaded into an Elasticsearch cluster and exposed to the application via a REST API created with AWS Lambda and API Gateway. Queries to Elasticsearch  enable accurate results relative to the input parameters. The REST API, created using the AWS CDK, is available to view in the [backend repository](https://github.com/billycastelli/MLB-Stats-cdk).
+Statistics were loaded into an Elasticsearch cluster and exposed to the application via a REST API created with AWS Lambda and API Gateway. Queries to Elasticsearch enable accurate results relative to the input parameters. The REST API, created using the AWS CDK, is available to view in the [backend repository](https://github.com/billycastelli/MLB-Stats-cdk).
 
-For a closer look at how the Lahman data was transformed into JSON format, see my [Lahman-To-Elasticsearch](https://github.com/billycastelli/Lahman-to-Elasticsearch) repo. 
+For a closer look at how the Lahman data was transformed into JSON format, see my [Lahman-To-Elasticsearch](https://github.com/billycastelli/Lahman-to-Elasticsearch) repo.
 
 ### Deployment
 
