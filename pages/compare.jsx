@@ -6,12 +6,10 @@ import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import PlayerItem from "../components/PlayerItem/PlayerItem";
 import ComparisonChart from "../components/ComparisonChart/ComparisonChart";
-import CompareInput from "../components/SearchInput/CompareInput";
-import CompareResults from "../components/SearchResults/CompareResults";
+import CompareSearch from "../components/CompareSearch/CompareSearch";
 
 const ComparisonPage = () => {
   const router = useRouter();
-  const [query, setQuery] = useState(undefined);
 
   const removePlayer = (playerid) => {
     if (router.query.players) {
@@ -49,13 +47,14 @@ const ComparisonPage = () => {
                   <div className="column is-half">
                     <p style={{ marginBottom: "8px" }}>
                       Search for players to graphically compare career stats,
-                      <br /> or see an{" "}
+                      <br /> or try an{" "}
                       <Link href="/compare?players=rodrial01%2Bpujolal01%2Bjeterde01%2B">
                         <a>example</a>
                       </Link>
                     </p>
-                    <CompareInput setQuery={setQuery} />
-                    {query && <CompareResults query={query} />}
+                    <CompareSearch />
+                    {/* <CompareInput setQuery={setQuery} />
+                    {query && <CompareResults query={query} />} */}
                   </div>
                   <div className="column is-half">
                     {router.query.players && (
