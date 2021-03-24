@@ -17,7 +17,7 @@ QuickStats is a Next.js application that allows the user to search, download, an
 #### Compare any set of players
 
 <p float="left">
-  <img src="screenshots/compare.png" width="600" />
+  <img src="screenshots/compare.png" width="600" border="1px solid #dedede" />
 </p>
 
 ### Frontend
