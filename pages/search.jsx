@@ -7,6 +7,7 @@ import { searchFetcher, SearchFetcher } from "../components/utils/fetchers";
 import SearchResults from "../components/SearchResults/SearchResults";
 import SearchPagination from "../components/SearchPagination/SearchPagination";
 import SearchQueryMeta from "../components/SearchResults/SearchQueryMeta";
+import Loader from "../components/Loader/Loader";
 
 export default function SearchHome() {
   const router = useRouter();
@@ -47,6 +48,13 @@ export default function SearchHome() {
                   prefix="Searching for "
                   query={router.query.q}
                 />
+                <div className="section" style={{ paddingBottom: "4px" }}>
+                  <div className="columns is-centered is-mobile">
+                    <div className="column is-two-thirds-desktop is-two-thirds-tablet is-four-fifths-mobile  p-0">
+                      <Loader text="Searching..." />
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
 

@@ -45,19 +45,19 @@ const ComparisonPage = () => {
             <div className="columns is-centered">
               <div className="column is-three-quarters">
                 <h1>Player comparison</h1>
-                <p style={{ marginBottom: "8px" }}>
-                  Search for players to graphically compare career stats,
-                  <br /> or see an{" "}
-                  <Link href="/compare?players=rodrial01%2Bpujolal01%2Bjeterde01%2B">
-                    <a>example</a>
-                  </Link>
-                </p>
                 <div className="columns">
-                  <div className="column">
+                  <div className="column is-half">
+                    <p style={{ marginBottom: "8px" }}>
+                      Search for players to graphically compare career stats,
+                      <br /> or see an{" "}
+                      <Link href="/compare?players=rodrial01%2Bpujolal01%2Bjeterde01%2B">
+                        <a>example</a>
+                      </Link>
+                    </p>
                     <CompareInput setQuery={setQuery} />
                     {query && <CompareResults query={query} />}
                   </div>
-                  <div className="column">
+                  <div className="column is-half">
                     {router.query.players && (
                       <>
                         {router.query.players
