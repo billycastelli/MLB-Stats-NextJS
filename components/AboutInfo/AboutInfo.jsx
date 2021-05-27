@@ -18,11 +18,11 @@ const AboutInfo = () => {
           Sean Lahman's site.
         </a>{" "}
         Data was extracted, cleaned, and put into an Elasticsearch cluster for
-        search. For more information about the data wrangling, view the
-        documentation in the{" "}
-        <a href="https://github.com/billycastelli/Lahman-to-Elasticsearch">
-          Lahman-to-Elasticsearch repository
-        </a>
+        search. For more information about the data wrangling and the
+        architecture of the application, go to the
+        <Link href="/about">
+          <a> about page</a>
+        </Link>
         .
       </p>
     </div>
